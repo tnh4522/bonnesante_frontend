@@ -1,7 +1,8 @@
+import useUserContext from "../hooks/useUserContext"
 
 
 export default function CheckUser({ user, doctor }) {
-    const userData = JSON.parse(localStorage.getItem('user'))
+    const { userData, saveUserData } = useUserContext();
 
     if (userData.isStaff) {
         return doctor

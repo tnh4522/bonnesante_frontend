@@ -6,10 +6,10 @@ export const UserContext = createContext();
 const UserContextProvider = ({ children }) => {
 
   const [user, setUser] = useState({
-    id: 3,
-    username: 'Bac Si',
+    id: 2,
+    username: 'Bệnh Nhân Trần Ngọc Huy',
     isAuthenticated: false,
-    isStaff: true,
+    isStaff: false,
   })
 
   const saveUser = (user) => {
@@ -23,7 +23,6 @@ const UserContextProvider = ({ children }) => {
 
     userData && setUser(userData)
   }, [])
-
 
   return <UserContext.Provider value={{ user, saveUser }}>{children}</UserContext.Provider>
 }
