@@ -18,11 +18,11 @@ const UserContextProvider = ({ children }) => {
     console.log('Set user successfully, user: ', user)
   }
 
-  useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem('user'))
+  // useEffect(() => {
+  //   const userData = JSON.parse(localStorage.getItem('user'))
 
-    userData && setUser(userData)
-  }, [])
+  //   userData && setUser(userData)
+  // }, [])
 
   return <UserContext.Provider value={{ user, saveUser }}>{children}</UserContext.Provider>
 }
