@@ -1,15 +1,14 @@
-import useUserContext from "../hooks/useUserContext"
+import React from 'react';
+import useUserContext from '../hooks/useUserContext';
 
+const CheckUser = ({ userComponent, doctorComponent }) => {
+    const { user, saveUser } = useUserContext();
 
-export default function CheckUser({ user, doctor }) {
-    const { userData, saveUserData } = useUserContext();
-
-    if (userData) {
-        if(userData.isStaff) {
-            return doctor
+    if (user) {
+        if (user.isStaff) {
+            return doctorComponent;
         }
     }
-
-    return user
+    return userComponent;
 }
-
+export default CheckUser;

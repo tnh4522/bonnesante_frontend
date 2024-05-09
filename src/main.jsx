@@ -35,17 +35,17 @@ if (rootElement) {
           <Route path='/signup' element={<SignUp />} />
           <Route path='/add-data' element={
             <ProtectedRoutes>
-              <CheckUser user={<AddData />} doctor={<><h1>You are doctor</h1></>} />
+              <CheckUser userComponent={<AddData />} doctorComponent={<><h1>You are doctor</h1></>} />
             </ProtectedRoutes>
           } />
           <Route path='/load-result' element={
             <ProtectedRoutes>
-              <CheckUser user={<LoadResult />} doctor={<><h1>You are doctor</h1></>} />
+              <CheckUser userComponent={<LoadResult />} doctorComponent={<><h1>You are doctor</h1></>} />
             </ProtectedRoutes>
           } />
           <Route path='/history' element={
             <ProtectedRoutes>
-              <CheckUser user={<History />} doctor={<><h1>You are doctor</h1></>} />
+              <CheckUser userComponent={<History />} doctorComponent={<><h1>You are doctor</h1></>} />
             </ProtectedRoutes>
           } />
           <Route path='/result' element={
@@ -64,17 +64,17 @@ if (rootElement) {
 
           <Route path='patient/meeting' element={
             <ProtectedRoutes>
-              <CheckUser user={<MeetingUser />} doctor={<><h1>You are doctor</h1></>} />
+              <CheckUser userComponent={<MeetingUser />} doctorComponent={<><h1>You are doctor</h1></>} />
             </ProtectedRoutes>} />
 
           <Route path='/doctor/meeting' element={
             <ProtectedRoutes>
-              <CheckUser user={<><h1>You are patient</h1></>} doctor={<MeetingDoctor />} />
+              <CheckUser userComponent={<><h1>You are patient</h1></>} doctorComponent={<MeetingDoctor />} />
             </ProtectedRoutes>} />
 
           <Route path='/checkScheduled' element={
             <ProtectedRoutes>
-              <CheckUser user={<><h1>You are patient</h1></>} doctor={<CheckScheduled />} />
+              <CheckUser userComponent={<><h1>You are patient</h1></>} doctorComponent={<CheckScheduled />} />
             </ProtectedRoutes>
           } />
         </Routes>
