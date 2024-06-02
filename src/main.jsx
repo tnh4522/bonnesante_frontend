@@ -22,6 +22,9 @@ import MeetingUser from './pages/Patient/MeetingUser.jsx'
 import UserContextProvider from './contexts/userContext'
 import ResultsContextProvider, { ResultsContext } from './contexts/resultsContext'
 import History from './pages/Result/History.jsx'
+import PatientPage from './pages/Patient/Patient.jsx'
+import UserProfile from './pages/User/UserProfile.jsx'
+import UserInfo from './pages/User/UserInfo.jsx'
 
 const rootElement = document.getElementById('root')
 if (rootElement) {
@@ -33,6 +36,8 @@ if (rootElement) {
           <Route path='/' element={<Welcome />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
+          <Route path='/user' element={<UserInfo />} />
+          <Route path='/profile' element={<UserProfile />} />
           <Route path='/add-data' element={
             <ProtectedRoutes>
               <CheckUser userComponent={<AddData />} doctorComponent={<><h1>You are doctor</h1></>} />
@@ -77,6 +82,16 @@ if (rootElement) {
               <CheckUser userComponent={<><h1>You are patient</h1></>} doctorComponent={<CheckScheduled />} />
             </ProtectedRoutes>
           } />
+
+
+          <Route path='/patient-page' element={
+            <ProtectedRoutes>
+              <CheckUser userComponent={<PatientPage />} doctorComponent={<><h1>You are doctor</h1></>} />
+            </ProtectedRoutes>} />
+
+
+          <Route path='*' element={<h1>Not Found</h1>} />
+
         </Routes>
       </App>
     </HashRouter>

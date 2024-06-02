@@ -2,20 +2,17 @@ import React from 'react'
 import style from './ListResult.module.css'
 import Icon from '@mdi/react'
 import { mdiHeartPulse, mdiWater, mdiLungs } from '@mdi/js'
-import ProgressBar from '@ramonak/react-progress-bar'
 import Chart from './Chart'
 import { PieChart } from './PieChart'
 
 const DataResult = ({ data }) => {
-  const { results } = data;
-
-  console.log("results", results);
-
+  const { result } = data;
+  const dateNow = new Date().toLocaleDateString();
   return (
     <div className={style.data_container}>
-      <h2>24 / 02 / 2024</h2>
+      <h2>{result ? result.result.date : dateNow}</h2>
       <div className={style.chart}>
-        <Chart />
+        <Chart result={result} />
       </div>
       <div className={style.data_section}>
         <div className={style.data_item}>
@@ -23,7 +20,7 @@ const DataResult = ({ data }) => {
           <p>Respiration</p>
           <div className={`${style.data_circle_overlay} ${style.yellow_overlay}`}>
             <div className={`${style.data_circle}  ${style.yellow}`}>
-              <strong>{results.resp}</strong>BPM
+              <strong>{result ? result.result.resp : 0}</strong>BPM
             </div>
           </div>
         </div>
@@ -34,7 +31,7 @@ const DataResult = ({ data }) => {
             className={`${style.data_circle_overlay} ${style.center_overlay} ${style.red_overlay}`}
           >
             <div className={`${style.data_circle} ${style.red} ${style.center}`}>
-              <strong>{Math.round(results.heartrate)}</strong>BPM
+              <strong>{result ? Math.round(result.result.heartrate) : 0}</strong>BPM
             </div>
           </div>
         </div>
@@ -49,7 +46,7 @@ const DataResult = ({ data }) => {
         </div>
       </div>
       <div className={style.data_status_container}>
-        <PieChart />
+        <PieChart result={result} />
       </div>
     </div>
   )

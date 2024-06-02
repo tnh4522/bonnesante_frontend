@@ -44,7 +44,6 @@ function MeetingRoomUser({ role = 0, userID }) {
         e.preventDefault();
 
         fetch(authEndpoint, {
-            mode: 'no-cors',
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

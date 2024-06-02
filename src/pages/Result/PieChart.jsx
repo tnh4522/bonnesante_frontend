@@ -5,8 +5,9 @@ import useResultsContext from '../../hooks/useResultsContext';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
-export function PieChart() {
-    const { result, setResult } = useResultsContext();
+export function PieChart(props) {
+    const result = props.result.result;
+    
     const [data, setData] = useState({
         labels: ['Normal', 'SVEB', 'VEB', 'FB'],
         datasets: [

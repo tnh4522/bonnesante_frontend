@@ -10,7 +10,7 @@ const LoadResult = () => {
 
   const handleCancel = () => {
     setCancelState(true);
-    navigator(-1);
+    navigator('/home');
   };
 
   return (

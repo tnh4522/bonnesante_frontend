@@ -11,9 +11,22 @@ import useResultsContext from '../../hooks/useResultsContext'
 
 const History = () => {
   let navigate = useNavigate();
-  function renderData() { };
 
-  const { result } = useResultsContext()
+  const { result } = useResultsContext();
+
+  function renderDataResult() {
+    if (Object.keys(result).length === 0) {
+      return <h1>No data found</h1>
+    } else {
+      return Object.keys(result).map((key, index) => {
+        return (
+          <SwiperSlide key={index}>
+            <DataResult data={{ result: result[key] }} />
+          </SwiperSlide>
+        )
+      })
+    }
+  }
 
   return (
     <div className={style.page}>
@@ -26,18 +39,7 @@ const History = () => {
           modules={[Pagination]}
           className={style.content}
         >
-          <SwiperSlide>
-            <DataResult data={{ results: result }} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <DataResult data={{ results: result }} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <DataResult data={{ results: result }} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <DataResult data={{ results: result }} />
-          </SwiperSlide>
+          {renderDataResult()}
         </Swiper>
         <button className={style.button} onClick={() => navigate('/add-data')}>
           Continue Measurement

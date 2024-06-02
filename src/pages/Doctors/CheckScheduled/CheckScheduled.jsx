@@ -1,4 +1,4 @@
-import { ref, child, get, update, onValue } from "firebase/database";
+import { ref, child, update, onValue } from "firebase/database";
 import { database } from "../../../services/firebase/config";
 
 import style from './CheckScheduled.module.css'
