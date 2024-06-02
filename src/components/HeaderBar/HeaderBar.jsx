@@ -13,14 +13,12 @@ const HeaderBar = () => {
         saveUser(null);
     }
     const getUrl = window.location.href;
-    const renderHeaderBar = () => {
 
-    }
-    if (getUrl.includes('user')) {
+    if (getUrl.includes('home')) {
         return (
             <div className={style.header}>
-                <Link to='/home'>
-                    <ion-icon name="home-outline"></ion-icon>
+                <Link to='/user'>
+                    {username ? <ion-icon name="person-circle-outline"></ion-icon> : <ion-icon name="arrow-back-outline"></ion-icon>}
                 </Link>
                 <img src={LogoFast} alt="logoFast" className={style.logoFast} />
                 <h3>{username ? 'Hello, ' + username : 'Blood Pressure'}</h3>
@@ -34,8 +32,8 @@ const HeaderBar = () => {
     }
     return (
         <div className={style.header}>
-            <Link to='/user'>
-                {username ? <ion-icon name="person-circle-outline"></ion-icon> : <ion-icon name="arrow-back-outline"></ion-icon>}
+            <Link to='/home'>
+                <ion-icon name="home-outline"></ion-icon>
             </Link>
             <img src={LogoFast} alt="logoFast" className={style.logoFast} />
             <h3>{username ? 'Hello, ' + username : 'Blood Pressure'}</h3>

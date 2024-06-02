@@ -25,6 +25,7 @@ import History from './pages/Result/History.jsx'
 import PatientPage from './pages/Patient/Patient.jsx'
 import UserProfile from './pages/User/UserProfile.jsx'
 import UserInfo from './pages/User/UserInfo.jsx'
+import Medical from './pages/Medical/Medical/Medical.jsx'
 
 const rootElement = document.getElementById('root')
 if (rootElement) {
@@ -38,6 +39,7 @@ if (rootElement) {
           <Route path='/signup' element={<SignUp />} />
           <Route path='/user' element={<UserInfo />} />
           <Route path='/profile' element={<UserProfile />} />
+          <Route path='/medical' element={<Medical />} />
           <Route path='/add-data' element={
             <ProtectedRoutes>
               <CheckUser userComponent={<AddData />} doctorComponent={<><h1>You are doctor</h1></>} />

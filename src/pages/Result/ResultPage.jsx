@@ -22,7 +22,7 @@ const ResultPage = () => {
 
     const renderResult = () => {
         if (Object.keys(result).length === 0) {
-            return <h1>No data found</h1>
+            return <h1>On data loading ...</h1>
         } else {
             return Object.keys(result).filter(key => result[key].userId === user.id).map((key, index) => {
                 return (

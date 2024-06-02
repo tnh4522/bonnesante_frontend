@@ -20,6 +20,7 @@
     "@ramonak/react-progress-bar": "^5.0.3",
     "@react-firebase/database": "^0.2.31",
     "@zoom/meetingsdk": "^3.1.4",
+    "antd": "^5.17.4",
     "axios": "^1.6.2",
     "bootstrap": "^5.3.2",
     "chart.js": "^4.4.0",

@@ -48,7 +48,7 @@ export default function Home() {
       </Link> : <div></div>}
 
       <div className={style.card_options}>
-        {/* {!user.isStaff ?
+        {!user.isStaff ?
           <button className={style.card} onClick={RequestVideoCall}>
             <img src={doctorIcon} alt="doctor icon" />
             <p>Make a VideoCall</p>
@@ -58,7 +58,7 @@ export default function Home() {
             <img src={doctorIcon} alt="doctor icon" />
             <p>Check the schedule</p>
             <ion-icon name="chevron-forward-outline"></ion-icon>
-          </Link>} */}
+          </Link>}
 
         {!user.isStaff ? <Link className={style.card} to="/history">
           <img src={scheduleIcon} alt="schedule icon" />
