@@ -26,7 +26,7 @@ const ResultPage = () => {
         } else {
             return Object.keys(result).filter(key => result[key].userId === user.id).map((key, index) => {
                 return (
-                    <DataResult data={{ result: result[key] }} />
+                    <DataResult data={{ result: result[key] }} key={index} />
                 )
             })
         }
