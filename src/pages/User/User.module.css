@@ -124,7 +124,6 @@ input[type="number"] {
 }
 
 .toggleButton, .genderButton, .saveButton {
-    padding: 10px;
     width: 100%;
     border: none;
     background: #d1d1d1;

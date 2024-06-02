@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import styles from './User.module.css'
+import useUserContext from '../../hooks/useUserContext';
 
 export default function UserInfo() {
     const [unit, setUnit] = useState('metric');

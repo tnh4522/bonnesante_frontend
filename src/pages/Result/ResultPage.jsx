@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import useResultsContext from '../../hooks/useResultsContext'
 import Loading from '../../lazy/Loading'
+import useUserContext from '../../hooks/useUserContext'
 
 
 function delayForDemo(promise) {
@@ -16,7 +17,20 @@ const DataResult = lazy(() => delayForDemo(import('./DataResult')));
 
 const ResultPage = () => {
     const navigate = useNavigate();
-    const { result, setResult } = useResultsContext();
+    const { result } = useResultsContext();
+    const { user } = useUserContext();
+
+    const renderResult = () => {
+        if (Object.keys(result).length === 0) {
+            return <h1>No data found</h1>
+        } else {
+            return Object.keys(result).filter(key => result[key].userId === user.id).map((key, index) => {
+                return (
+                    <DataResult data={{ result: result[key] }} />
+                )
+            })
+        }
+    }
     return (
         <div className={style.page}>
             <div className={style.container}>
@@ -24,7 +38,7 @@ const ResultPage = () => {
                 <div className={style.loading_data}>
                     {result &&
                         (<Suspense fallback={<Loading />}>
-                            <DataResult data={{ results: result }} />
+                            {renderResult()}
                         </Suspense>)
                     }
                 </div>
