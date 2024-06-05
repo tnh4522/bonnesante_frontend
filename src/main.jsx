@@ -23,9 +23,10 @@ import UserContextProvider from './contexts/userContext'
 import ResultsContextProvider, { ResultsContext } from './contexts/resultsContext'
 import History from './pages/Result/History.jsx'
 import PatientPage from './pages/Patient/Patient.jsx'
-import UserProfile from './pages/User/UserProfile.jsx'
+import PatientProfile from './pages/User/PatientProfile.jsx'
 import UserInfo from './pages/User/UserInfo.jsx'
 import Medical from './pages/Medical/Medical/Medical.jsx'
+import MakeAppointment from './pages/User/MakeAppointment.jsx'
 
 const rootElement = document.getElementById('root')
 if (rootElement) {
@@ -37,9 +38,14 @@ if (rootElement) {
           <Route path='/' element={<Welcome />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
-          <Route path='/user' element={<UserInfo />} />
-          <Route path='/profile' element={<UserProfile />} />
+          <Route path='/user' element={<ProtectedRoutes>
+            <UserInfo />
+          </ProtectedRoutes>} />
+          <Route path='/profile' element={<ProtectedRoutes>
+            <PatientProfile />
+          </ProtectedRoutes>} />
           <Route path='/medical' element={<Medical />} />
+          <Route path='/home' element={<Home />} />
           <Route path='/add-data' element={
             <ProtectedRoutes>
               <CheckUser userComponent={<AddData />} doctorComponent={<><h1>You are doctor</h1></>} />
@@ -60,14 +66,16 @@ if (rootElement) {
               <ResultPage />
             </ProtectedRoutes>
           } />
+          <Route path='/appointment' element={
+            <ProtectedRoutes>
+              <MakeAppointment />
+            </ProtectedRoutes>
+          } />
           <Route path='/chart' element={
             <ProtectedRoutes>
               <PieChart />
             </ProtectedRoutes>} />
-          <Route path='/home' element={
-            <ProtectedRoutes>
-              <Home />
-            </ProtectedRoutes>} />
+          
 
           <Route path='patient/meeting' element={
             <ProtectedRoutes>

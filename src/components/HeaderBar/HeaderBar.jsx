@@ -17,8 +17,8 @@ const HeaderBar = () => {
     if (getUrl.includes('home')) {
         return (
             <div className={style.header}>
-                <Link to='/user'>
-                    {username ? <ion-icon name="person-circle-outline"></ion-icon> : <ion-icon name="arrow-back-outline"></ion-icon>}
+                <Link to={username ? '/user' : '/login'}>
+                    <ion-icon name="person-circle-outline"></ion-icon>
                 </Link>
                 <img src={LogoFast} alt="logoFast" className={style.logoFast} />
                 <h3>{username ? 'Hello, ' + username : 'Blood Pressure'}</h3>
@@ -26,7 +26,7 @@ const HeaderBar = () => {
                 {username ?
                     <Link onClick={logout} to='/' className={style.logout}>
                         <ion-icon name="log-out-outline"></ion-icon>
-                    </Link> : null}
+                    </Link> : <ion-icon name="settings-outline"></ion-icon>}
             </div>
         )
     }

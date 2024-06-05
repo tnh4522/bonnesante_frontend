@@ -88,6 +88,15 @@
     color: #fff;
 }
 
+.appointment {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
 .profileContainer {
     max-width: 400px;
     margin: 20px auto;
@@ -105,17 +114,17 @@
 .formProfile {
     width: 90%;
     border: 1px solid #d1d1d1;
-    padding: 10px;
+    padding: 20px;
     border-radius: 15px;
     background-color: #e2e6ee;
 }
 .inputGroup label {
     display: block;
-    margin-bottom: 5px;
+    margin: 10px 0;
     font-weight: 600;
 }
 
-input[type="number"] {
+input {
     width: 100%;
     padding: 10px;
     margin: 5px 0;
@@ -141,6 +150,7 @@ input[type="number"] {
 
 .genderButtons {
     display: flex;
+    margin-bottom: 10px;
 }
 
 .genderButton {

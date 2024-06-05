@@ -7,12 +7,7 @@ export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
 
-  const [user, setUser] = useState({
-    id: 1,
-    username: 'Trần Ngọc Huy',
-    isAuthenticated: false,
-    isStaff: false,
-  })
+  const [user, setUser] = useState({})
 
   const saveUser = (user) => {
     setUser(user)
@@ -21,15 +16,8 @@ const UserContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    // const userData = JSON.parse(localStorage.getItem('user'))
-    // userData && setUser(userData)
-    // set(ref(database, 'users/ ' + user.id), user)
-    //   .then(() => {
-    //     console.log('Set user successfully, user: ', user)
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error setting user:', error);
-    //   });
+    const userData = JSON.parse(localStorage.getItem('user'))
+    userData && setUser(userData)
   }, []);
 
   return <UserContext.Provider value={{ user, saveUser }}>{children}</UserContext.Provider>

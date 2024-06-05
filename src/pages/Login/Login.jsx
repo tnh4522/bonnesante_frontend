@@ -1,11 +1,9 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect } from 'react'
 import style from './Login.module.css'
-import API from '../../constants/api/API'
 import { Link, useNavigate } from 'react-router-dom'
 import { ValidationLogin } from '../../validation/validationForm'
 import axios from 'axios'
-import { PATH_URL } from '../../constants/values'
 import useUserContext from '../../hooks/useUserContext'
 
 const Login = () => {
@@ -17,8 +15,10 @@ const Login = () => {
   const { user, saveUser } = useUserContext();
 
   useEffect(() => {
-    user && navigate('/home')
-  }, [])
+    if (user) {
+      navigate('/home')
+    }
+  }, [user]);
 
   const handleChange = e => {
     setData({ ...data, [e.target.name]: e.target.value })
@@ -52,16 +52,18 @@ const Login = () => {
         password: data.password
       }
 
-      axios.post(PATH_URL + 'login/', data_json)
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+
+      axios.post('http://localhost:8080/api/user/login', data_json, config)
         .then(res => {
           if (res.status === 200) {
-
-            navigate('/home')
-
             console.log(res.data)
-            const data = { ...data_json, id: res.data.user_info.id, isAuthenticated: true, isStaff: res.data.user_info.is_staff }
-
-            saveUser(data);
+            saveUser(res.data)
+            navigate('/home')
           } else {
             console.log('!200')
             setError({ login: res.data.message })

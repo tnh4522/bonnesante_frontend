@@ -2,6 +2,7 @@ import React from 'react'
 import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import doctorIcon from '../../assets/images/doctor-icon-avatar-white_136162-58.png';
 import scheduleIcon from '../../assets/images/schedule-icon.png';
+import patientIcon from '../../assets/images/patient-profile.png';
 import style from './Home.module.css'
 import { Link } from 'react-router-dom';
 import { ref, set, child } from "firebase/database";
@@ -51,7 +52,7 @@ export default function Home() {
         {!user.isStaff ?
           <button className={style.card} onClick={RequestVideoCall}>
             <img src={doctorIcon} alt="doctor icon" />
-            <p>Make a VideoCall</p>
+            <p className={style.card_text}>Video Call</p>
             <ion-icon name="chevron-forward-outline"></ion-icon>
           </button> :
           <Link className={style.card} to="/checkScheduled">
@@ -60,9 +61,21 @@ export default function Home() {
             <ion-icon name="chevron-forward-outline"></ion-icon>
           </Link>}
 
-        {!user.isStaff ? <Link className={style.card} to="/history">
+        {user ? <Link className={style.card} to="/profile">
+          <img src={patientIcon} alt="schedule icon" />
+          <p className={style.card_text}>Profile</p>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </Link> : <div></div>}
+
+        {user ? <Link className={style.card} to="/appointment">
           <img src={scheduleIcon} alt="schedule icon" />
-          <p>History</p>
+          <p className={style.card_text}>Make an appointment</p>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </Link> : <div></div>}
+
+        {user ? <Link className={style.card} to="/history">
+          <img src={scheduleIcon} alt="schedule icon" />
+          <p className={style.card_text}>History</p>
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </Link> : <div></div>}
       </div>
