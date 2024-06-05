@@ -4,16 +4,14 @@
   background-color: #e2e6ee;
   border-radius: 30px;
   display: grid;
-  grid-template-columns: 10% 20% 40% 20% 10%;
+  grid-template-columns: 20% 60% 20%;
   align-items: center;
-  margin: 20px auto;
+  margin: 10px auto;
   padding: 10px 20px;
-
-
 }
 
 .header h3 {
-  font-size: 12px;
+  font-size: 20px;
   font-weight: 600;
   color: #000;
   justify-self: center;
@@ -23,6 +21,7 @@
   font-size: 22px;
   color: #000;
 }
+
 .header img {
   width: 40px;
   height: 30px;

@@ -26,11 +26,12 @@ const MeetingUser = () => {
     }
   });
 
-
   return (
     <div className={style.page}>
+      <div className={style.header}>
+        <HeaderBar title='Meeting'/>
+      </div>
       <div className={style.containerMeetingUser}>
-        <HeaderBar />
         <div className={style.contentMeetingUser}>
           {
             // isAccepted ? <MeetingRoomUser userID={user.id} /> : <FindingDoctor />

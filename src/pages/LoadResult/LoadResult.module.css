@@ -7,20 +7,31 @@
 .page {
   width: 100%;
   background: #fff;
-  font-family: Nunito Sans;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .container {
   margin: 0 auto;
-  width: 85%;
+  width: 100%;
   max-width: 1000px;
 }
 
-.content {
+.header {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.content {
+  width: 90%;
   height: 100%;
-  margin: 50px auto;
+  margin: 0px auto;
   display: grid;
+  padding: 20px;
+  border: 1px solid #808080;
+  border-radius: 20px;
 }
 
 .header_content {
@@ -62,7 +73,7 @@ canvas {
 .content h3 {
   font-size: 20px;
   color: #363636;
-  margin: 20px 0;
+  margin: 15px 0;
   justify-self: center;
   font-family: Nunito Sans;
   font-weight: 700;
@@ -79,7 +90,7 @@ button {
   color: #fff;
   font-size: 20px;
   font-weight: 700;
-  margin-top: 20px;
+  margin-top: 10px;
   cursor: pointer;
   text-transform: uppercase;
 }

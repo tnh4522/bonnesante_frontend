@@ -16,7 +16,9 @@ const LoadResult = () => {
   return (
     <div className={style.page}>
       <div className={style.container}>
-        <HeaderBar />
+        <div className={style.header}>
+          <HeaderBar title="Measure" />
+        </div>
         <div className={style.content}>
           <div className={style.header_content}>
             <h3>Just a few seconds</h3>

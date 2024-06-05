@@ -22,9 +22,8 @@ export default function UserInfo() {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <HeaderBar />
+                <HeaderBar title="User Profile" />
             </div>
-            <h1>User Profile</h1>
             <form className={styles.formProfile}>
                 <div className={styles.inputGroup}>
                     <label>Username</label>

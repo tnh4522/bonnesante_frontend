@@ -10,7 +10,7 @@ const DataResult = ({ data }) => {
   const dateNow = new Date().toLocaleDateString();
   return (
     <div className={style.data_container}>
-      <h2>{result ? result.result.date : dateNow}</h2>
+      <h2 className={style.title}>{result ? result.result.date : dateNow}</h2>
       <div className={style.chart}>
         <Chart result={result} />
       </div>

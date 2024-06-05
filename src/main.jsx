@@ -27,6 +27,9 @@ import PatientProfile from './pages/User/PatientProfile.jsx'
 import UserInfo from './pages/User/UserInfo.jsx'
 import Medical from './pages/Medical/Medical/Medical.jsx'
 import MakeAppointment from './pages/User/MakeAppointment.jsx'
+import Appointment from './pages/User/Appointment.jsx'
+import HistoryPage from './pages/History/HistoryPage.jsx'
+import AppointmentDetail from './pages/Appoitment/AppoitmentDetail.jsx'
 
 const rootElement = document.getElementById('root')
 if (rootElement) {
@@ -56,9 +59,14 @@ if (rootElement) {
               <CheckUser userComponent={<LoadResult />} doctorComponent={<><h1>You are doctor</h1></>} />
             </ProtectedRoutes>
           } />
-          <Route path='/history' element={
+          <Route path='/history/result' element={
             <ProtectedRoutes>
               <CheckUser userComponent={<History />} doctorComponent={<><h1>You are doctor</h1></>} />
+            </ProtectedRoutes>
+          } />
+          <Route path='/history' element={
+            <ProtectedRoutes>
+              <HistoryPage />
             </ProtectedRoutes>
           } />
           <Route path='/result' element={
@@ -68,6 +76,16 @@ if (rootElement) {
           } />
           <Route path='/appointment' element={
             <ProtectedRoutes>
+              <Appointment />
+            </ProtectedRoutes>
+          } />
+          <Route path='/appointment/detail/:id' element={
+            <ProtectedRoutes>
+              <AppointmentDetail />
+            </ProtectedRoutes>
+          } />
+          <Route path='/make-appointment' element={
+            <ProtectedRoutes>
               <MakeAppointment />
             </ProtectedRoutes>
           } />
@@ -75,7 +93,6 @@ if (rootElement) {
             <ProtectedRoutes>
               <PieChart />
             </ProtectedRoutes>} />
-          
 
           <Route path='patient/meeting' element={
             <ProtectedRoutes>
@@ -93,12 +110,10 @@ if (rootElement) {
             </ProtectedRoutes>
           } />
 
-
           <Route path='/patient-page' element={
             <ProtectedRoutes>
               <CheckUser userComponent={<PatientPage />} doctorComponent={<><h1>You are doctor</h1></>} />
             </ProtectedRoutes>} />
-
 
           <Route path='*' element={<h1>Not Found</h1>} />
 

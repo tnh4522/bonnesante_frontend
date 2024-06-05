@@ -31,7 +31,7 @@ const History = () => {
   return (
     <div className={style.page}>
       <div className={style.container}>
-        <HeaderBar />
+        <HeaderBar title="History Measurement" />
         <Swiper
           pagination={{
             dynamicBullets: true,

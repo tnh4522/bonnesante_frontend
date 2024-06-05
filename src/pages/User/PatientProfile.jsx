@@ -87,10 +87,9 @@ export default function PatientProfile() {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <HeaderBar />
+                <HeaderBar title="Patient Profile" />
             </div>
             {contextHolder}
-            <h1>Patient Profile</h1>
             <form className={styles.formProfile}>
                 <div className={styles.inputGroup}>
                     <label>Name</label>
