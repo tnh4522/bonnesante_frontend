@@ -35,33 +35,8 @@ export default function AppointmentDetail() {
                         },
                         {
                             key: '2',
-                            label: 'Specialty',
-                            children: doctor.specialization,
-                        },
-                        {
-                            key: '3',
-                            label: 'Hospital',
-                            children: doctor.hospital,
-                        },
-                        {
-                            key: '4',
-                            label: 'Address',
-                            children: doctor.address,
-                        },
-                        {
-                            key: '5',
-                            label: 'Email',
-                            children: doctor.email,
-                        },
-                        {
-                            key: '6',
-                            label: 'Phone',
-                            children: doctor.phone,
-                        },
-                        {
-                            key: '7',
-                            label: 'Time Available',
-                            children: doctor.timeSlot,
+                            label: 'Doctor ID',
+                            children: doctor.id,
                         }
                     ];
 
@@ -73,48 +48,8 @@ export default function AppointmentDetail() {
                         },
                         {
                             key: '2',
-                            label: 'Email',
-                            children: patient.email,
-                        },
-                        {
-                            key: '3',
-                            label: 'Phone',
-                            children: patient.phone,
-                        },
-                        {
-                            key: '4',
-                            label: 'Address',
-                            children: patient.address,
-                        },
-                        {
-                            key: '5',
-                            label: 'Age',
-                            children: patient.age,
-                        },
-                        {
-                            key: '6',
-                            label: 'Gender',
-                            children: patient.gender === 0 ? 'Male' : 'Female',
-                        },
-                        {
-                            key: '7',
-                            label: 'Health ID',
-                            children: patient.healthId,
-                        },
-                        {
-                            key: '8',
-                            label: 'Blood Group',
-                            children: patient.bloodGroup,
-                        },
-                        {
-                            key: '9',
-                            label: 'Weight',
-                            children: patient.weight,
-                        },
-                        {
-                            key: '10',
-                            label: 'Height',
-                            children: patient.height,
+                            label: 'Patient ID',
+                            children: patient.id,
                         }
                     ];
 
@@ -177,11 +112,10 @@ export default function AppointmentDetail() {
                 <HeaderBar title="Appointment Detail" />
             </div>
             <div className={styles.appointment}>
-                <Descriptions title="Doctor Information" items={itemDoctor} />
+                <Descriptions title="Doctor Information" items={itemDoctor} style={{ backgroundColor: '#f0f2f5', padding: '10px', borderRadius: '15px', marginBottom: '5px' }} />
+                <Descriptions title="Patient Information" items={itemPatient} style={{ backgroundColor: '#f0f2f5', padding: '10px', borderRadius: '15px', marginBottom: '5px' }} />
                 <Divider />
-                <Descriptions title="Patient Information" items={itemPatient} />
-                <Divider />
-                <Descriptions title="Appointment Information" bordered items={items} />
+                <Descriptions title="Appointment Status" bordered items={items} />
             </div>
         </div>
     );

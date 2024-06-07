@@ -33,6 +33,7 @@ import DoctorPage from './pages/Doctors/DoctorPage.jsx'
 import DoctorRegister from './pages/Doctors/DoctorRegister.jsx'
 import SettingsScreen from './pages/Setting/Setting.jsx'
 import ListDoctorPage from './pages/Appoitment/ListDoctorPage.jsx'
+import DoctorChatPage from './pages/Chat/DoctorChatPage.jsx'
 
 const rootElement = document.getElementById('root')
 if (rootElement) {
@@ -88,7 +89,7 @@ if (rootElement) {
               <DoctorRegister />
             </ProtectedRoutes>
           } />
-          <Route path='/result' element={
+          <Route path='/result/:id' element={
             <ProtectedRoutes>
               <ResultPage />
             </ProtectedRoutes>
@@ -96,6 +97,16 @@ if (rootElement) {
           <Route path='/appointment/doctor/list' element={
             <ProtectedRoutes>
               <ListDoctorPage />
+            </ProtectedRoutes>
+          } />
+          <Route path='/chat' element={
+            <ProtectedRoutes>
+              <ListDoctorPage />
+            </ProtectedRoutes>
+          } />
+          <Route path='/chat/doctor/:id' element={
+            <ProtectedRoutes>
+              <DoctorChatPage />
             </ProtectedRoutes>
           } />
           <Route path='/appointment' element={

@@ -56,11 +56,11 @@ export default function DoctorPage() {
                         />
                         <div className={style.card_content}>
                             <p className={style.title}><strong className={style.sub_title}>Dr.</strong> {doctor.name}</p>
+                            <p><strong className={style.sub_title}>Doctor ID: </strong> {doctor.id}</p>
                             <p><strong className={style.sub_title}>Special: </strong> {doctor.specialization}</p>
                             <p><strong className={style.sub_title}>Hospital: </strong> {doctor.hospital}</p>
                             <p><strong className={style.sub_title}>Phone: </strong> {doctor.phone}</p>
                             <p><strong className={style.sub_title}>Email: </strong> {doctor.email}</p>
-                            <p><strong className={style.sub_title}>Address: </strong> {doctor.address}</p>
                         </div>
                         <div className={style.card_image}>
                             <img src={doctorIcon} alt="image" />
@@ -75,16 +75,17 @@ export default function DoctorPage() {
         setSearch(e.target.value);
     };
 
+    const patient  = JSON.parse(localStorage.getItem('patient'));
 
     const registerDoctor = () => {
         if (selectedDoctorIds.length === 0) {
             alert('Please select a doctor');
             return;
         } else {
-            axios.post(API_URL + 'patient/1/register/doctor', { doctorIds: selectedDoctorIds })
+            axios.post(API_URL + 'patient/' + patient.id + '/register/doctor', { doctorIds: selectedDoctorIds })
                 .then(res => {
                     console.log('Doctors registered successfully:', res.data);
-                    navigate('/doctor/list');
+                    navigate('/home');
                 })
                 .catch(err => console.log('Error registering doctors:', err));
         }

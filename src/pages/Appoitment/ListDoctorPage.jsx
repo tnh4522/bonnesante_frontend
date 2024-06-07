@@ -12,9 +12,12 @@ export default function ListDoctorPage() {
     const [doctors, setDoctors] = useState([]);
     const [search, setSearch] = useState('');
     const [error, setError] = useState(false);
+    const hash = window.location.pathname;
 
+    const patient = JSON.parse(localStorage.getItem('patient'));
+  
     useEffect(() => {
-        axios.get(API_URL + 'patient/1/doctor/list')
+        axios.get(API_URL + 'patient/' + patient.id + '/doctor/list')
             .then(res => {
                 const doctors = res.data;
                 if (doctors.length === 0) {
@@ -53,22 +56,27 @@ export default function ListDoctorPage() {
         } else {
             return filteredDoctors.map((doctor, index) => {
                 return (
-                    <div key={index} className={style.card}>
-                        <div className={style.card_content}>
-                            <p className={style.title}><strong className={style.sub_title}>Dr.</strong> {doctor.name}</p>
-                            <p><strong className={style.sub_title}>Special: </strong> {doctor.specialization}</p>
-                            <p><strong className={style.sub_title}>Hospital: </strong> {doctor.hospital}</p>
-                            <p><strong className={style.sub_title}>Phone: </strong> {doctor.phone}</p>
-                            <p><strong className={style.sub_title}>Email: </strong> {doctor.email}</p>
-                            <p><strong className={style.sub_title}>Address: </strong> {doctor.address}</p>
+                    <>
+                        <div key={index} className={style.card}>
+                            <div className={style.card_content}>
+                                <p className={style.title}><strong className={style.sub_title}>Dr.</strong> {doctor.name}</p>
+                                <p><strong className={style.sub_title}>Doctor ID: </strong> {doctor.id}</p>
+                                <p><strong className={style.sub_title}>Special: </strong> {doctor.specialization}</p>
+                                <p><strong className={style.sub_title}>Hospital: </strong> {doctor.hospital}</p>
+                                <p><strong className={style.sub_title}>Phone: </strong> {doctor.phone}</p>
+                                <p><strong className={style.sub_title}>Email: </strong> {doctor.email}</p>
+                                {hash == '/chat' ? (
+                                    <Link to={'/chat/doctor/' + doctor.id} state={doctor} className={style.card_button}>Chat with doctor</Link>
+                                ) : (
+                                    <Link to={'/make-appointment/' + doctor.id} state={doctor} className={style.card_button}>Make an appointment</Link>
+                                )}
+                            </div>
+                            <div className={style.card_image}>
+                                <img src={doctorIcon} alt="image" />
+                            </div>
                         </div>
-                        <div className={style.card_image}>
-                            <img src={doctorIcon} alt="image" />
-                        </div>
-                        <div>
-                            <Link to={'/make-appointment/' + doctor.id} state={doctor} className={style.card_button}>Make an appointment</Link>
-                        </div>
-                    </div>
+
+                    </>
                 );
             });
         }
@@ -77,7 +85,7 @@ export default function ListDoctorPage() {
     return (
         <div className={style.container}>
             <div className={style.header}>
-                <HeaderBar title="My Doctor" />
+                <HeaderBar title="Select Doctor" />
             </div>
             {renderDoctor()}
         </div>

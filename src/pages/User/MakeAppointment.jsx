@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { API_URL } from '../../constants/values.js'
 
+
 const MakeAppointment = (props) => {
     const date = new Date();
     const currentDate = date.toLocaleDateString();
@@ -156,10 +157,12 @@ const MakeAppointment = (props) => {
         });
     };
 
+    const patient = JSON.parse(localStorage.getItem('patient'));
+
     const scheduleAppointment = () => {
         const appointment = {
-            doctorId: 1,
-            patientId: 1,
+            doctorId: doctor.id,
+            patientId: patient.id,
             date: dateSelected,
             timeSlot: timeSlotSelected,
         };

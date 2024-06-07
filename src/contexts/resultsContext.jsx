@@ -10,22 +10,17 @@ const ResultsContextProvider = ({ children }) => {
   const [result, setResult] = useState({});
 
   useEffect(() => {
-    const resultData = JSON.parse(localStorage.getItem('result'));
-    if (resultData) {
-      setResult(resultData);
-    } else {
-      const dbRef = ref(database);
+    const dbRef = ref(database);
 
-      onValue((child(dbRef, 'result/')), (snapshot) => {
-          const data = snapshot.val();
-  
-          const resultArray = Object.values(data);
-  
-          if (resultArray.length !== result.length) {
-              setResult(resultArray);
-          }
-      });
-    }
+    onValue((child(dbRef, 'result/')), (snapshot) => {
+      const data = snapshot.val();
+
+      const resultArray = Object.values(data);
+
+      if (resultArray.length !== result.length) {
+        setResult(resultArray);
+      }
+    });
   }, [])
 
   return <ResultsContext.Provider value={{ result, setResult }}>{children}</ResultsContext.Provider>

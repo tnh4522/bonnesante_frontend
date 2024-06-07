@@ -1,10 +1,10 @@
 import React, { Suspense, lazy } from 'react'
 import style from './ListResult.module.css'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import useResultsContext from '../../hooks/useResultsContext'
 import Loading from '../../lazy/Loading'
-import useUserContext from '../../hooks/useUserContext'
+
 
 function delayForDemo(promise) {
     return new Promise(resolve => {
@@ -17,13 +17,14 @@ const DataResult = lazy(() => delayForDemo(import('./DataResult')));
 const ResultPage = () => {
     const navigate = useNavigate();
     const { result } = useResultsContext();
-    const { user } = useUserContext();
+    const patient = JSON.parse(localStorage.getItem('patient'));
+    const resultId = useParams().id;
 
     const renderResult = () => {
         if (Object.keys(result).length === 0) {
             return <h1>On data loading ...</h1>
         } else {
-            return Object.keys(result).filter(key => result[key].userId === user.id).map((key, index) => {
+            return Object.keys(result).filter(key => result[key].result.resultId === resultId).map((key, index) => {
                 return (
                     <DataResult data={{ result: result[key] }} key={index} />
                 )
@@ -34,7 +35,7 @@ const ResultPage = () => {
     return (
         <div className={style.page}>
             <div className={style.container}>
-                <HeaderBar title="Result Measurement"/>
+                <HeaderBar title="Result Measurement" />
                 <div className={style.loading_data}>
                     {result &&
                         (<Suspense fallback={<Loading />}>

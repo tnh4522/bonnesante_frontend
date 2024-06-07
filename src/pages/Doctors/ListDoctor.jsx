@@ -5,7 +5,6 @@ import style from './DoctorRegister.module.css';
 import { useNavigate } from 'react-router-dom';
 import { Checkbox, Button } from 'antd';
 import axios from 'axios';
-import { set } from 'lodash';
 import { API_URL } from '../../constants/values.js'
 
 export default function DoctorList() {
@@ -14,9 +13,10 @@ export default function DoctorList() {
     const [search, setSearch] = useState('');
     const [selectedDoctorIds, setSelectedDoctorIds] = useState([]);
     const [error, setError] = useState(false);
+    const patient = JSON.parse(localStorage.getItem('patient'));
 
     useEffect(() => {
-        axios.get(API_URL + 'patient/1/doctor/list')
+        axios.get(API_URL + 'patient/' + patient.id + '/doctor/list')
             .then(res => {
                 const doctors = res.data;
                 if (doctors.length === 0) {
@@ -72,6 +72,7 @@ export default function DoctorList() {
                         />
                         <div className={style.card_content}>
                             <p className={style.title}><strong className={style.sub_title}>Dr.</strong> {doctor.name}</p>
+                            <p><strong className={style.sub_title}>Doctor ID: </strong> {doctor.id}</p>
                             <p><strong className={style.sub_title}>Special: </strong> {doctor.specialization}</p>
                             <p><strong className={style.sub_title}>Hospital: </strong> {doctor.hospital}</p>
                             <p><strong className={style.sub_title}>Phone: </strong> {doctor.phone}</p>
@@ -91,8 +92,8 @@ export default function DoctorList() {
     const deleteDoctor = () => {
         let doctorsNotDeleted = doctors.filter(doctor => !selectedDoctorIds.includes(doctor.id));
         let doctorsNotDeletedIds = doctorsNotDeleted.map(doctor => doctor.id);
-
-        axios.post(API_URL + 'patient/1/doctor/update', { doctorIds: doctorsNotDeletedIds })
+        
+        axios.post(API_URL + 'patient/' + patient.id + '/doctor/update', { doctorIds: doctorsNotDeletedIds })
             .then(res => {
                 console.log('Doctors deleted:', res.data);
                 setDoctors(doctorsNotDeleted);

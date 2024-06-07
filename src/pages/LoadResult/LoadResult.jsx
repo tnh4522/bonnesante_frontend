@@ -29,7 +29,7 @@ const LoadResult = () => {
             </div>
           </div>
           <FaceDetectionComponent cancelState={cancelState} isAddData={true} />
-          <h3>We are analyzing your measurement</h3>
+          <h3 style={{textAlign: 'center'}}>We are analyzing your measurement</h3>
           <button className={style.button} onClick={handleCancel}>
             Cancel
           </button>
