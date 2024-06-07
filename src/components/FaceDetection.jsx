@@ -11,7 +11,7 @@ import { database } from '../services/firebase/config'
 import { ref, set, child } from 'firebase/database'
 import ToastResult from './Meeting/ToastResult'
 import uuid from 'react-uuid'
-import { date } from 'yup'
+
 
 const FaceDetectionComponent = props => {
 
@@ -98,10 +98,9 @@ const FaceDetectionComponent = props => {
           if (response.data) {
 
             setShowToast(true)
-            const uuid = uuid();
             const dataResult = {
               ...response.data,
-              resultId: uuid,
+              resultId: uuid(),
               date: new Date().toLocaleDateString(),
             }
 
@@ -120,7 +119,7 @@ const FaceDetectionComponent = props => {
               })
 
             if (props.isAddData) {
-              navigate("/result/" + uuid)
+              navigate("/result/" + dataResult.resultId)
             }
           }
         })
