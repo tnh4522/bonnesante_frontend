@@ -15,11 +15,6 @@ const Login = () => {
 
   const { user, saveUser } = useUserContext();
 
-  useEffect(() => {
-    if (user) {
-      navigate('/home')
-    }
-  }, [user]);
 
   const handleChange = e => {
     setData({ ...data, [e.target.name]: e.target.value })

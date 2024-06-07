@@ -11,13 +11,18 @@ const UserContextProvider = ({ children }) => {
 
   const saveUser = (user) => {
     setUser(user)
-    localStorage.setItem('user', JSON.stringify(user));
-    console.log('Set user successfully, user: ', user)
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user))
+    } else {
+      localStorage.removeItem('user')
+    }
   }
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('user'))
-    userData && setUser(userData)
+    if (userData) {
+      setUser(userData)
+    }
   }, []);
 
   return <UserContext.Provider value={{ user, saveUser }}>{children}</UserContext.Provider>

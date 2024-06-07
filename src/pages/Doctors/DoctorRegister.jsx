@@ -15,7 +15,7 @@ export default function DoctorPage() {
     const [selectedDoctorIds, setSelectedDoctorIds] = useState([]);
 
     useEffect(() => {
-        axios.get(API_URL + '/doctor/list')
+        axios.get(API_URL + 'doctor/list')
             .then(res => {
                 const doctors = res.data;
                 setDoctors(doctors);
