@@ -3,7 +3,7 @@ import './Index.css'
 
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { HashRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import Welcome from './pages/Welcome/Welcome.jsx'
 import Login from './pages/Login/Login.jsx'
@@ -19,28 +19,32 @@ import CheckScheduled from './pages/Doctors/CheckScheduled/CheckScheduled.jsx'
 import CheckUser from './utils/CheckUser.jsx'
 import MeetingDoctor from './pages/Doctors/Meeting/MeetingDoctor.jsx'
 import MeetingUser from './pages/Patient/MeetingUser.jsx'
-import UserContextProvider from './contexts/userContext'
-import ResultsContextProvider, { ResultsContext } from './contexts/resultsContext'
 import History from './pages/Result/History.jsx'
 import PatientPage from './pages/Patient/Patient.jsx'
 import PatientProfile from './pages/User/PatientProfile.jsx'
 import UserInfo from './pages/User/UserInfo.jsx'
-import Medical from './pages/Medical/Medical/Medical.jsx'
+import Medical from './pages/Medical/Medical.jsx'
 import MakeAppointment from './pages/User/MakeAppointment.jsx'
 import Appointment from './pages/User/Appointment.jsx'
 import HistoryPage from './pages/History/HistoryPage.jsx'
 import AppointmentDetail from './pages/Appoitment/AppoitmentDetail.jsx'
+import DoctorList from './pages/Doctors/ListDoctor.jsx'
+import DoctorPage from './pages/Doctors/DoctorPage.jsx'
+import DoctorRegister from './pages/Doctors/DoctorRegister.jsx'
+import SettingsScreen from './pages/Setting/Setting.jsx'
+import ListDoctorPage from './pages/Appoitment/ListDoctorPage.jsx'
 
 const rootElement = document.getElementById('root')
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     // <React.StrictMode>
-    <HashRouter>
+    <Router>
       <App>
         <Routes>
           <Route path='/' element={<Welcome />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
+          <Route path='/setting' element={<SettingsScreen />} />
           <Route path='/user' element={<ProtectedRoutes>
             <UserInfo />
           </ProtectedRoutes>} />
@@ -69,9 +73,29 @@ if (rootElement) {
               <HistoryPage />
             </ProtectedRoutes>
           } />
+          <Route path='/doctor' element={
+            <ProtectedRoutes>
+              <DoctorPage />
+            </ProtectedRoutes>
+          } />
+          <Route path='/doctor/list' element={
+            <ProtectedRoutes>
+              <DoctorList />
+            </ProtectedRoutes>
+          } />
+          <Route path='/register/doctor' element={
+            <ProtectedRoutes>
+              <DoctorRegister />
+            </ProtectedRoutes>
+          } />
           <Route path='/result' element={
             <ProtectedRoutes>
               <ResultPage />
+            </ProtectedRoutes>
+          } />
+          <Route path='/appointment/doctor/list' element={
+            <ProtectedRoutes>
+              <ListDoctorPage />
             </ProtectedRoutes>
           } />
           <Route path='/appointment' element={
@@ -84,7 +108,7 @@ if (rootElement) {
               <AppointmentDetail />
             </ProtectedRoutes>
           } />
-          <Route path='/make-appointment' element={
+          <Route path='/make-appointment/:id' element={
             <ProtectedRoutes>
               <MakeAppointment />
             </ProtectedRoutes>
@@ -119,7 +143,7 @@ if (rootElement) {
 
         </Routes>
       </App>
-    </HashRouter>
+    </Router>
     // </React.StrictMode>
   )
 }

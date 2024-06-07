@@ -35,24 +35,42 @@ export default function PatientProfile() {
     };
 
     useEffect(() => {
-        if (user) {
-            axios.get('http://localhost:8080/api/patient/' + user.id)
-                .then(res => {
-                    const patient = res.data;
-                    console.log(patient);
-                    setId(patient.id);
-                    setName(patient.name);
-                    setAge(patient.age);
-                    setGender(patient.gender == 0 ? "male" : "female");
-                    setEmail(patient.email);
-                    setPhone(patient.phone);
-                    setAddress(patient.address);
-                    setHealthID(patient.healthId);
-                    setBloodGroup(patient.bloodGroup);
-                    setWeight(patient.weight);
-                    setHeight(patient.height);
-                })
-                .catch(err => console.log(err));
+        let patient = JSON.parse(localStorage.getItem('patient'));
+        if (!patient) {
+            if (user) {
+                axios.get('http://localhost:8080/api/patient/' + user.id)
+                    .then(res => {
+                        const patient = res.data;
+
+                        setId(patient.id);
+                        setName(patient.name);
+                        setAge(patient.age);
+                        setGender(patient.gender == 0 ? "male" : "female");
+                        setEmail(patient.email);
+                        setPhone(patient.phone);
+                        setAddress(patient.address);
+                        setHealthID(patient.healthId);
+                        setBloodGroup(patient.bloodGroup);
+                        setWeight(patient.weight);
+                        setHeight(patient.height);
+
+                        // lưu vào local storage
+                        localStorage.setItem('patient', JSON.stringify(patient));
+                    })
+                    .catch(err => console.log(err));
+            }
+        } else {
+            setId(patient.id);
+            setName(patient.name);
+            setAge(patient.age);
+            setGender(patient.gender == 0 ? "male" : "female");
+            setEmail(patient.email);
+            setPhone(patient.phone);
+            setAddress(patient.address);
+            setHealthID(patient.healthId);
+            setBloodGroup(patient.bloodGroup);
+            setWeight(patient.weight);
+            setHeight(patient.height);
         }
     }, [user]);
 
@@ -78,6 +96,7 @@ export default function PatientProfile() {
                     if (res.status === 200) {
                         success();
                         navigater('/profile');
+                        localStorage.setItem('patient', JSON.stringify(patient));
                     }
                 })
                 .catch(err => console.log(err));

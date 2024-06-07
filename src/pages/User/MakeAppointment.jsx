@@ -1,169 +1,216 @@
 import React, { useEffect, useState } from 'react';
-import HeaderBar from '../../components/HeaderBar/HeaderBar'
-import styles from './User.module.css'
-import useUserContext from '../../hooks/useUserContext';
+import { Flex, Segmented } from 'antd';
+import { Button, Select, Checkbox } from 'antd';
+import HeaderBar from '../../components/HeaderBar/HeaderBar';
+import style from './User.module.css';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { message } from 'antd';
-import { Select } from 'antd';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
+const MakeAppointment = (props) => {
+    const date = new Date();
+    const currentDate = date.toLocaleDateString();
 
-export default function MakeAppointment() {
-    const [appointment, setAppointment] = useState([]);
+    const [dateSelected, setDateSelected] = useState(currentDate);
+    const [timeSelected, setTimeSelected] = useState('early morning');
+    const [schedule, setSchedule] = useState([]);
+    const [timeSlotSelected, setTimeSlotSelected] = useState([]);
 
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [address, setAddress] = useState('');
-    const [healthID, setHealthID] = useState('');
+    const doctorID = useParams().id;
 
-    const [patientId, setPatientId] = useState('');
-    const [doctorId, setDoctorId] = useState('');
-    const [date, setDate] = useState('');
-    const [startTime, setStartTime] = useState('');
-
-    const { user, saveUser } = useUserContext();
-
-    const navigater = useNavigate();
-
-    const [messageApi, contextHolder] = message.useMessage();
-    const success = () => {
-        messageApi
-            .open({
-                type: 'loading',
-                content: 'Action in progress..',
-                duration: 2.5,
-            })
-            .then(() => message.success('Profile updated successfully', 1.5))
-    };
-
-    const [options, setOptions] = useState([]);
-
-    const handleChange = (value) => {
-        setDoctorId(value);
-    };
-
+    const navigator = useNavigate();
+    
+    const location = useLocation();
+    const doctor  = location.state;
+    
     useEffect(() => {
-        if (user) {
-            axios.get('http://localhost:8080/api/patient/' + user.id)
-                .then(res => {
-                    const patient = res.data;
+        axios.post('http://localhost:8080/api/doctor/' + doctorID + '/schedule', dateSelected)
+            .then(res => {
+                setSchedule(res.data);
+            })
+            .catch(err => console.log(err));
+    }, [dateSelected]);
 
-                    setPatientId(patient.id);
-                    setName(patient.name);
-                    setEmail(patient.email);
-                    setPhone(patient.phone);
-                    setAddress(patient.address);
-                    setHealthID(patient.healthId);
+    const datesPerPage = 4;
 
-                    axios.get('http://localhost:8080/api/patient/appointment/' + patient.id)
-                        .then(res => {
-                            const appointment = res.data;
-                            console.log(appointment);
-                            setAppointment(appointment);
+    const getAllDate = () => {
+        const allDate = [];
+        for (let i = 0; i < 12; i++) {
+            const newDate = new Date(date.getTime() + i * 24 * 60 * 60 * 1000);
+            const option = {
+                value: newDate.toLocaleDateString(),
+                label: newDate.toLocaleDateString(),
+            };
 
-                            axios.get('http://localhost:8080/api/doctor/list')
-                                .then(res => {
-                                    const doctors = res.data;
-                                    const options = doctors.map(doctor => {
-                                        return {
-                                            value: doctor.id,
-                                            label: doctor.name
-                                        }
-                                    });
-
-                                    setOptions(options);
-                                })
-                                .catch(err => console.log(err));
-                        })
-                        .catch(err => console.log(err));
-                })
-                .catch(err => console.log(err));
+            allDate.push(option);
         }
+        return allDate;
+    };
 
-    }, [user]);
+    const getTimeUnavailable = () => {
+        const timeUnavailable = [];
+        schedule.forEach(slot => {
+            const time = slot.time.split(':')[0];
+            timeUnavailable.push(parseInt(time));
+        });
+        return timeUnavailable;
+    };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!name || !email || !phone || !address || !healthID || !doctorId || !date || !startTime) {
-            message.error('Please fill in all fields');
-            return;
-        } else {
-            const appointment = {
-                patientId: patientId,
-                doctorId: doctorId,
-                date: date,
-                startTime: startTime
+    const allDates = getAllDate();
+    const [currentPage, setCurrentPage] = useState(0);
+
+    const totalPages = Math.ceil(allDates.length / datesPerPage);
+
+    const handlePrevPage = () => {
+        if (currentPage > 0) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages - 1) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const currentDates = allDates.slice(
+        currentPage * datesPerPage,
+        (currentPage + 1) * datesPerPage
+    );
+
+    const renderTime = (session) => {
+        const time = [];
+        const timeUnavailable = getTimeUnavailable();
+        for (let i = 0; i < 24; i++) {
+            if (!timeUnavailable.includes(i)) {
+                time.push(i);
             }
-
-            axios.post('http://localhost:8080/api/patient/appointment', appointment)
-                .then(res => {
-                    console.log(res.data);
-                    success();
-                    navigater('/home');
-                })
-                .catch(err => console.log(err));
         }
-    }
+
+        if (session === 'early morning') {
+            return time.map((hour, index) => {
+                if (hour < 8) {
+                    return (
+                        <div className={style.sub_content} key={index}>
+                            <input type='checkbox' onChange={() => handleCheckboxChange(hour + ':00')} />
+                            <p>{hour}:00 - {hour + 1}:00</p>
+                        </div>
+                    );
+                }
+            });
+        } else if (session === 'office hours') {
+            return time.map((hour, index) => {
+                if (hour >= 8 && hour < 16) {
+                    return (
+                        <div className={style.sub_content} key={index}>
+                            <input type='checkbox' onChange={() => handleCheckboxChange(hour + ':00')} />
+                            <p>{hour}:00 - {hour + 1}:00</p>
+                        </div>
+                    );
+                }
+            });
+        } else if (session === 'evening') {
+            return time.map((hour, index) => {
+                if (hour >= 16) {
+                    return (
+                        <div className={style.sub_content} key={index}>
+                            <input type='checkbox' onChange={() => handleCheckboxChange(hour + ':00')} />
+                            <p>{hour}:00 - {hour + 1}:00</p>
+                        </div>
+                    );
+                }
+            });
+        }
+    };
+
+    const renderTimeSlot = () => {
+        if (timeSelected === 'early morning') {
+            return (
+                <div className={style.content}>
+                    {renderTime('early morning')}
+                </div>
+            );
+        } else if (timeSelected === 'office hours') {
+            return (
+                <div className={style.content}>
+                    {renderTime('office hours')}
+                </div>
+            );
+        } else if (timeSelected === 'evening') {
+            return (
+                <div className={style.content}>
+                    {renderTime('evening')}
+                </div>
+            );
+        }
+    };
+
+    const handleCheckboxChange = (time) => {
+        setTimeSlotSelected(prevTimeSlotSelected => {
+            if (prevTimeSlotSelected.includes(time)) {
+                return prevTimeSlotSelected.filter(hour => hour !== time);
+            } else {
+                return [...prevTimeSlotSelected, time];
+            }
+        });
+    };
+
+    const scheduleAppointment = () => {
+        const appointment = {
+            doctorId: 1,
+            patientId: 1,
+            date: dateSelected,
+            timeSlot: timeSlotSelected,
+        };
+
+        axios.post('http://localhost:8080/api/patient/appointment', appointment)
+            .then(res => {
+                if (res.status === 200) {
+                    navigator('/appointment');
+                }
+            })
+            .catch(err => console.log(err));
+    };
 
     return (
-        <div className={styles.container}>
-            <div className={styles.header}>
-                <HeaderBar title="Make Appointment"/>
+        <div className={style.container}>
+            <div className={style.header}>
+                <HeaderBar title="Make Appointment" />
             </div>
-            {contextHolder}
-            <form className={styles.formProfile}>
-                <div className={styles.inputGroup}>
-                    <label>Name</label>
-                    <input type="text" name="name" value={name} onChange={e => setName(e.target.value)} />
-                </div>
-                <div className={styles.inputGroup}>
-                    <label>Email</label>
-                    <input type="text" name="email" value={email} onChange={e => setEmail(e.target.value)} />
-                </div>
-                <div className={styles.inputGroup}>
-                    <label>Phone</label>
-                    <input type="text" name="phone" value={phone} onChange={e => setPhone(e.target.value)} />
-                </div>
-                <div className={styles.inputGroup}>
-                    <label>Address</label>
-                    <input type="text" name="address" value={address} onChange={e => setAddress(e.target.value)} />
-                </div>
-                <div className={styles.inputGroup}>
-                    <label>Health ID</label>
-                    <input type="text" name="healthID" value={healthID} onChange={e => setHealthID(e.target.value)} />
-                </div>
-                <div className={styles.inputGroup}>
-                    <label>Doctor</label>
-                    <Select
-                        showSearch
-                        style={{
-                            width: '100%',
-                            height: '40px',
-                            borderRadius: '15px',
-                        }}
-                        optionFilterProp="children"
-                        filterOption={(input, option) => (option?.label ?? '').includes(input)}
-                        filterSort={(optionA, optionB) =>
-                            (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
-                        }
-                        placeholder="Select Doctor"
-                        onChange={handleChange}
-                        options={options}
-                    />
-                </div>
-                <div className={styles.inputGroup}>
-                    <label>Date</label>
-                    <input type="date" name="date" value={date} onChange={e => setDate(e.target.value)} />
-                </div>
-                <div className={styles.inputGroup}>
-                    <label>Time</label>
-                    <input type="time" name="time" value={startTime} onChange={e => setStartTime(e.target.value)} />
-                </div>
-                <div className={styles.inputGroup}>
-                    <button type="button" className={styles.saveButton} onClick={handleSubmit}>Make Appointment</button>
-                </div>
-            </form>
+            <h2>Dr. {doctor && doctor.name}</h2>
+            <Flex justify="center">
+                <LeftOutlined onClick={handlePrevPage} className={currentPage === 0 ? style.disabled : ''} />
+                <Segmented
+                    onChange={(value) => setDateSelected(value)}
+                    options={currentDates}
+                    defaultValue={currentDate}
+                    style={{ margin: '15px auto' }}
+                    block
+                />
+                <RightOutlined onClick={handleNextPage} className={currentPage === totalPages - 1 ? style.disabled : ''} />
+            </Flex>
+            <Select
+                defaultValue='early morning'
+                options={[
+                    { label: 'Early Morning', value: 'early morning' },
+                    { label: 'Office Hours', value: 'office hours' },
+                    { label: 'Evening', value: 'evening' },
+                ]}
+                onChange={(value) => setTimeSelected(value)}
+            />
+            {renderTimeSlot()}
+            <div className={style.footer}>
+                <Button
+                    onClick={scheduleAppointment}
+                    className={style.btn}
+                    type="primary"
+                    style={{ backgroundColor: '#e71e50' }}
+                >
+                    Schedule
+                </Button>
+            </div>
         </div>
     )
-}
+};
+
+export default MakeAppointment;

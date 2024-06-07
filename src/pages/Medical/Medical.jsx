@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import style from './Medical.module.css'
 import { Link } from 'react-router-dom'
-import HeaderBar from '../../../components/HeaderBar/HeaderBar';
+import HeaderBar from '../../components/HeaderBar/HeaderBar';
 import { AudioOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import { Card } from 'antd';

@@ -62,13 +62,13 @@ export default function Home() {
             <ion-icon name="chevron-forward-outline"></ion-icon>
           </Link>} */}
 
-        {user ? <Link className={style.card} onClick={RequestVideoCall}>
+        {user ? <Link className={style.card} to="/doctor">
           <img src={doctorIcon} alt="schedule icon" />
-          <p className={style.card_text}>Meeting</p>
+          <p className={style.card_text}>Doctor</p>
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </Link> : <div></div>}
 
-        {user ? <Link className={style.card} to="/make-appointment">
+        {user ? <Link className={style.card} to="/appointment/doctor/list">
           <img src={scheduleIcon} alt="schedule icon" />
           <p className={style.card_text}>Appointment</p>
           <ion-icon name="chevron-forward-outline"></ion-icon>

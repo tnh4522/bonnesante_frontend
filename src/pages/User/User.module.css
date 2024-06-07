@@ -88,6 +88,38 @@
     color: #fff;
 }
 
+.content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.sub_content {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    background-color: #e2e6ee;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.sub_content input {
+    width: 10%;
+    padding: 1rem;
+    border: 1px solid #e71e50;
+    border-radius: 1rem;
+    margin-right: 1rem;
+}
+
+.disabled {
+    color: #b1b2b3;
+    cursor: not-allowed;
+}
+
 .appointment {
     width: 90%;
     display: flex;
@@ -96,6 +128,7 @@
     justify-content: center;
     border: 1px solid rgba(0,0,0,0.5);
     border-radius: 1rem;
+    padding-bottom: 1rem;
 }
 
 .profileContainer {
@@ -161,6 +194,32 @@ input {
 
 .genderButton:last-child {
     margin-right: 0;
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    position: sticky;
+    bottom: 0;
+}
+
+.footer .btn {
+    width: 100%;
+    height: 100%;
+    background-color: #464545;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 1000;
+    text-transform: uppercase;
+    padding: 1rem;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 1rem;
 }
 
 @keyframes beat {

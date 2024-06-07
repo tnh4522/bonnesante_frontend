@@ -45,6 +45,9 @@ const HeaderBar = (props) => {
                 <ion-icon name="arrow-back-outline"></ion-icon>
             </Link>
             <h3>{title != '' ? title : 'Blood Pressure'}</h3>
+            <Link to='/home' className={style.logout}>
+                <ion-icon name="home-outline"></ion-icon>
+            </Link>
         </div>
     )
 }
