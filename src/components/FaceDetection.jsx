@@ -106,7 +106,7 @@ const FaceDetectionComponent = props => {
 
             setResult(dataResult);
             
-            set(child(dbRef, `result` + dataResult.resultId), {
+            set(child(dbRef, `result/` + dataResult.resultId), {
               patientId: patient.id,
               result: dataResult,
             })

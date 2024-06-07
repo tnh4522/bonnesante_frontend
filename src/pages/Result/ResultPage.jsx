@@ -35,7 +35,7 @@ const ResultPage = () => {
     return (
         <div className={style.page}>
             <div className={style.container}>
-                <HeaderBar title="Result Measurement" />
+                <HeaderBar title="Result Measurement"/>
                 <div className={style.loading_data}>
                     {result &&
                         (<Suspense fallback={<Loading />}>
