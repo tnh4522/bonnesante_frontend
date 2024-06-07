@@ -12,6 +12,11 @@ const Login = () => {
   const [error, setError] = React.useState({ username: '', password: '', login: '' })
 
   let navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem('user')) {
+      navigate('/home')
+    }
+  }, [])
 
   const { user, saveUser } = useUserContext();
 
