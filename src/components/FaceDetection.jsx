@@ -22,7 +22,7 @@ const FaceDetectionComponent = props => {
   const [isFinish, setIsFinish] = useState(false)
   const [showToast, setShowToast] = useState(false)
 
-  const { user, saveUser } = useUserContext()
+  const { user, saveUser } = useUserContext();
   const { result, setResult } = useResultsContext();
 
   const intervalRef = useRef(null)
@@ -106,7 +106,7 @@ const FaceDetectionComponent = props => {
 
             setResult(dataResult);
             
-            set(child(dbRef, `result/` + patient.id), {
+            set(child(dbRef, `result` + dataResult.resultId), {
               patientId: patient.id,
               result: dataResult,
             })
