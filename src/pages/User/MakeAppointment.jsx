@@ -163,7 +163,7 @@ const MakeAppointment = (props) => {
             timeSlot: timeSlotSelected,
         };
 
-        axios.post('http://localhost:8080/api/patient/appointment', appointment)
+        axios.post('http://192.168.200.124:8080/api/patient/appointment', appointment)
             .then(res => {
                 if (res.status === 200) {
                     navigator('/appointment');

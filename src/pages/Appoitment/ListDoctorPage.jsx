@@ -60,7 +60,6 @@ export default function ListDoctorPage() {
                             <p><strong className={style.sub_title}>Phone: </strong> {doctor.phone}</p>
                             <p><strong className={style.sub_title}>Email: </strong> {doctor.email}</p>
                             <p><strong className={style.sub_title}>Address: </strong> {doctor.address}</p>
-                            <p><strong className={style.sub_title}>Time: </strong> {doctor.timeSlot}</p>
                         </div>
                         <div className={style.card_image}>
                             <img src={doctorIcon} alt="image" />

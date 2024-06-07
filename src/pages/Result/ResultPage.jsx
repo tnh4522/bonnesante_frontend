@@ -6,7 +6,6 @@ import useResultsContext from '../../hooks/useResultsContext'
 import Loading from '../../lazy/Loading'
 import useUserContext from '../../hooks/useUserContext'
 
-
 function delayForDemo(promise) {
     return new Promise(resolve => {
         setTimeout(resolve, 1000);
@@ -31,10 +30,11 @@ const ResultPage = () => {
             })
         }
     }
+
     return (
         <div className={style.page}>
             <div className={style.container}>
-                <HeaderBar />
+                <HeaderBar title="Result Measurement"/>
                 <div className={style.loading_data}>
                     {result &&
                         (<Suspense fallback={<Loading />}>

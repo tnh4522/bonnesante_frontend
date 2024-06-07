@@ -3,20 +3,19 @@ import HeaderBar from '../../components/HeaderBar/HeaderBar';
 import doctorIcon from '../../assets/images/doctor-icon-avatar-white_136162-58.png';
 import style from './DoctorRegister.module.css';
 import { useNavigate } from 'react-router-dom';
-import useUserContext from '../../hooks/useUserContext';
-import { Checkbox, Divider, Button } from 'antd';
+import { Checkbox, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import { API_URL } from '../../constants/values';
 
 export default function DoctorPage() {
     const navigate = useNavigate();
     const [doctors, setDoctors] = useState([]);
     const [search, setSearch] = useState('');
     const [selectedDoctorIds, setSelectedDoctorIds] = useState([]);
-    const { user, saveUser } = useUserContext();
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/doctor/list')
+        axios.get(API_URL + '/doctor/list')
             .then(res => {
                 const doctors = res.data;
                 setDoctors(doctors);
@@ -62,7 +61,6 @@ export default function DoctorPage() {
                             <p><strong className={style.sub_title}>Phone: </strong> {doctor.phone}</p>
                             <p><strong className={style.sub_title}>Email: </strong> {doctor.email}</p>
                             <p><strong className={style.sub_title}>Address: </strong> {doctor.address}</p>
-                            <p><strong className={style.sub_title}>Time: </strong> {doctor.timeSlot}</p>
                         </div>
                         <div className={style.card_image}>
                             <img src={doctorIcon} alt="image" />
@@ -83,7 +81,7 @@ export default function DoctorPage() {
             alert('Please select a doctor');
             return;
         } else {
-            axios.post('http://localhost:8080/api/patient/1/register/doctor', { doctorIds: selectedDoctorIds })
+            axios.post(API_URL + 'patient/1/register/doctor', { doctorIds: selectedDoctorIds })
                 .then(res => {
                     console.log('Doctors registered successfully:', res.data);
                     navigate('/doctor/list');
@@ -108,7 +106,6 @@ export default function DoctorPage() {
                 />
                 <button className={style.search_btn}><SearchOutlined /></button>
             </div>
-            <Divider />
             {renderDoctor()}
             <div className={style.footer}>
                 <Button

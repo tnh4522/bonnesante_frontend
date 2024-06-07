@@ -5,6 +5,7 @@ import useUserContext from '../../hooks/useUserContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Collapse, Divider, Button } from 'antd';
+import { API_URL } from '../../constants/values';
 
 export default function Appointment() {
     const [appointment, setAppointment] = useState([]);
@@ -24,7 +25,7 @@ export default function Appointment() {
 
     useEffect(() => {
         if (user) {
-            axios.get('http://localhost:8080/api/patient/' + user.id)
+            axios.get('http://192.168.200.124:8080/api/patient/' + user.id)
                 .then(res => {
                     const patient = res.data;
 
