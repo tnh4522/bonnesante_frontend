@@ -6,6 +6,7 @@ import style from './User.module.css';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { API_URL } from '../../constants/values.js'
 
 const MakeAppointment = (props) => {
     const date = new Date();
@@ -24,7 +25,7 @@ const MakeAppointment = (props) => {
     const doctor  = location.state;
     
     useEffect(() => {
-        axios.post('http://localhost:8080/api/doctor/' + doctorID + '/schedule', dateSelected)
+        axios.post(API_URL + 'doctor/' + doctorID + '/schedule', dateSelected)
             .then(res => {
                 setSchedule(res.data);
             })
@@ -163,7 +164,7 @@ const MakeAppointment = (props) => {
             timeSlot: timeSlotSelected,
         };
 
-        axios.post('http://192.168.200.124:8080/api/patient/appointment', appointment)
+        axios.post(API_URL + 'patient/appointment', appointment)
             .then(res => {
                 if (res.status === 200) {
                     navigator('/appointment');

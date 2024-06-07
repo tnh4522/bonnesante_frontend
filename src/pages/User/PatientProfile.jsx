@@ -5,6 +5,7 @@ import useUserContext from '../../hooks/useUserContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
+import { API_URL } from '../../constants/values.js'
 
 export default function PatientProfile() {
     const [id, setId] = useState('');
@@ -38,7 +39,7 @@ export default function PatientProfile() {
         let patient = JSON.parse(localStorage.getItem('patient'));
         if (!patient) {
             if (user) {
-                axios.get('http://localhost:8080/api/patient/' + user.id)
+                axios.get(API_URL + 'patient/' + user.id)
                     .then(res => {
                         const patient = res.data;
 
@@ -91,7 +92,7 @@ export default function PatientProfile() {
                 weight: weight,
                 height: height
             }
-            axios.post('http://localhost:8080/api/patient/save', patient)
+            axios.post(API_URL + 'patient/save', patient)
                 .then(res => {
                     if (res.status === 200) {
                         success();

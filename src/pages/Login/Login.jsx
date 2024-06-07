@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ValidationLogin } from '../../validation/validationForm'
 import axios from 'axios'
 import useUserContext from '../../hooks/useUserContext'
+import { API_URL } from '../../constants/values.js'
 
 const Login = () => {
   const [data, setData] = React.useState({ username: '', password: '', isAuthenticated: false, isStaff: false })
@@ -58,7 +59,7 @@ const Login = () => {
         }
       }
 
-      axios.post('http://localhost:8080/api/user/login', data_json, config)
+      axios.post(API_URL + 'user/login', data_json, config)
         .then(res => {
           if (res.status === 200) {
             console.log(res.data)

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Checkbox, Button } from 'antd';
 import axios from 'axios';
 import { set } from 'lodash';
+import { API_URL } from '../../constants/values.js'
 
 export default function DoctorList() {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function DoctorList() {
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/patient/1/doctor/list')
+        axios.get(API_URL + 'patient/1/doctor/list')
             .then(res => {
                 const doctors = res.data;
                 if (doctors.length === 0) {
@@ -91,7 +92,7 @@ export default function DoctorList() {
         let doctorsNotDeleted = doctors.filter(doctor => !selectedDoctorIds.includes(doctor.id));
         let doctorsNotDeletedIds = doctorsNotDeleted.map(doctor => doctor.id);
 
-        axios.post('http://localhost:8080/api/patient/1/doctor/update', { doctorIds: doctorsNotDeletedIds })
+        axios.post(API_URL + 'patient/1/doctor/update', { doctorIds: doctorsNotDeletedIds })
             .then(res => {
                 console.log('Doctors deleted:', res.data);
                 setDoctors(doctorsNotDeleted);

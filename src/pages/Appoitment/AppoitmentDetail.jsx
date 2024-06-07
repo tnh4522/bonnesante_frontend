@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Collapse, Badge, Divider, Button, Descriptions } from 'antd';
 import { child } from 'firebase/database';
+import { API_URL } from '../../constants/values.js'
 
 export default function AppointmentDetail() {
     const [appointment, setAppointment] = useState([]);
@@ -20,7 +21,7 @@ export default function AppointmentDetail() {
 
     useEffect(() => {
         if (user) {
-            axios.get('http://localhost:8080/api/patient/appointment/detail/' + appointmentIDParam)
+            axios.get(API_URL + 'patient/appointment/detail/' + appointmentIDParam)
                 .then(res => {
                     const appointment = res.data;
                     const doctor = appointment.doctorEntity;

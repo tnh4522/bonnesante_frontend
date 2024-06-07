@@ -5,6 +5,7 @@ import style from './DoctorRegister.module.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { API_URL } from '../../constants/values.js'
 
 export default function ListDoctorPage() {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function ListDoctorPage() {
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/patient/1/doctor/list')
+        axios.get(API_URL + 'patient/1/doctor/list')
             .then(res => {
                 const doctors = res.data;
                 if (doctors.length === 0) {

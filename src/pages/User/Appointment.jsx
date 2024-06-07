@@ -25,17 +25,17 @@ export default function Appointment() {
 
     useEffect(() => {
         if (user) {
-            axios.get('http://192.168.200.124:8080/api/patient/' + user.id)
+            axios.get(API_URL + 'patient/' + user.id)
                 .then(res => {
                     const patient = res.data;
 
-                    axios.get('http://localhost:8080/api/patient/appointment/' + patient.id)
+                    axios.get(API_URL + 'patient/appointment/' + patient.id)
                         .then(res => {
                             const appointment = res.data;
                             console.log(appointment);
                             setAppointment(appointment);
 
-                            axios.get('http://localhost:8080/api/doctor/list')
+                            axios.get(API_URL + 'doctor/list')
                                 .then(res => {
                                     const doctors = res.data;
                                     const options = doctors.map(doctor => {
