@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import doctorIcon from '../../assets/images/doctor-icon-avatar-white_136162-58.png';
 import scheduleIcon from '../../assets/images/schedule-icon.png';
@@ -11,10 +11,13 @@ import { ref, set, child } from "firebase/database";
 import { database } from '../../services/firebase/config';
 import { useNavigate } from 'react-router-dom';
 import useUserContext from '../../hooks/useUserContext';
+import axios from 'axios';
+import { API_URL } from '../../constants/values.js';
 
 export default function Home() {
   const navigate = useNavigate();
   const { user, saveUser } = useUserContext();
+
   const dbRef = ref(database);
   const RequestVideoCall = () => {
 

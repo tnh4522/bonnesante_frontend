@@ -15,7 +15,6 @@ const Login = () => {
 
   const { user, saveUser } = useUserContext();
 
-
   const handleChange = e => {
     setData({ ...data, [e.target.name]: e.target.value })
   }
@@ -57,9 +56,16 @@ const Login = () => {
       axios.post(API_URL + 'user/login', data_json, config)
         .then(res => {
           if (res.status === 200) {
-            console.log(res.data)
-            saveUser(res.data)
-            navigate('/home')
+            saveUser(res.data);
+
+            axios.get(API_URL + 'patient/' + res.data.id)
+              .then(res => {
+                const patient = res.data;
+
+                localStorage.setItem('patient', JSON.stringify(patient));
+                navigate('/home')
+              })
+              .catch(err => console.log(err));
           } else {
             console.log('!200')
             setError({ login: res.data.message })
