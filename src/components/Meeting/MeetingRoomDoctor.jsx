@@ -39,18 +39,6 @@ function MeetingRoomDoctor({ role = 0 }) {
     var client;
 
     const handleConfirm = async () => {
-        const updates = {
-            [`videoCall/${userID}/isAccepted`]: true
-        };
-
-        const UpdateOutDatedResult = {
-            [`result/${userID}/result/isOutDated`]: true
-        }
-
-        console.log(updates)
-        // Get a reference to the database
-
-        // Update the specified location with the updates object
         try {
             await update(dbRef, UpdateOutDatedResult)
             await update(dbRef, updates);
@@ -81,8 +69,7 @@ function MeetingRoomDoctor({ role = 0 }) {
     }
 
     function startMeeting(signature) {
-        console.log('Signature:', signature)
-        // var client
+
         try {
             client = ZoomMtgEmbedded.destroyClient();
             client = ZoomMtgEmbedded.createClient();
@@ -91,8 +78,6 @@ function MeetingRoomDoctor({ role = 0 }) {
         }
 
         let meetingSDKElement = document.getElementById('meetingSDKElement');
-
-        console.log(meetingSDKElement)
 
         client.init({ zoomAppRoot: meetingSDKElement, language: 'en-US', patchJsMedia: true }).then(() => {
             client.join({
@@ -121,15 +106,6 @@ function MeetingRoomDoctor({ role = 0 }) {
     const handleEndMeeting = async () => {
         client = ZoomMtgEmbedded.destroyClient();
 
-        const updates = {
-            [`videoCall/${userID}/isMeeting`]: false
-        };
-
-        console.log(updates)
-        // Get a reference to the database
-        // const dbRef = ref(database);
-
-        // Update the specified location with the updates object
         try {
             await update(dbRef, updates);
 

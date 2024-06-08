@@ -63,8 +63,6 @@ function MeetingRoomUser({ role = 0, userID }) {
 
         let meetingSDKElement = document.getElementById('meetingSDKElement');
 
-        console.log(meetingSDKElement)
-
         client.init({ zoomAppRoot: meetingSDKElement, language: 'en-US', patchJsMedia: true }).then(() => {
             client.join({
                 signature: signature,

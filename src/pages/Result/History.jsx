@@ -19,6 +19,7 @@ const History = () => {
       return <h1>No data found</h1>
     } else {
       return Object.keys(result).map((key, index) => {
+        console.log(result[key]);
         return (
           <SwiperSlide key={index}>
             <DataResult data={{ result: result[key] }} />
