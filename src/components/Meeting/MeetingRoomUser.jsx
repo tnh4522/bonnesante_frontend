@@ -85,19 +85,19 @@ function MeetingRoomUser({ role = 0, userID }) {
         })
     }
 
-    useEffect(() => {
-        onValue((child(dbRef, `videoCall/${userID}`)), (snapshot) => {
-            const requestInfo = snapshot.val();
+    // useEffect(() => {
+    //     onValue((child(dbRef, `videoCall/${userID}`)), (snapshot) => {
+    //         const requestInfo = snapshot.val();
 
-            if (!requestInfo.isMeeting) {
+    //         if (!requestInfo.isMeeting) {
 
-                client = ZoomMtgEmbedded.destroyClient();
-                setIsStateMeeting(false)
+    //             client = ZoomMtgEmbedded.destroyClient();
+    //             setIsStateMeeting(false)
 
-                navigate("/home")
-            }
-        });
-    }, [userID]);
+    //             navigate("/home")
+    //         }
+    //     });
+    // }, [userID]);
 
     return (
         <div>

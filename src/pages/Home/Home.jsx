@@ -11,13 +11,11 @@ import { ref, set, child } from "firebase/database";
 import { database } from '../../services/firebase/config';
 import { useNavigate } from 'react-router-dom';
 import useUserContext from '../../hooks/useUserContext';
-import axios from 'axios';
-import { API_URL } from '../../constants/values.js';
 
 export default function Home() {
   const navigate = useNavigate();
   const { user, saveUser } = useUserContext();
-
+  const patientName = JSON.parse(localStorage.getItem('patient')).name;
   const dbRef = ref(database);
   const RequestVideoCall = () => {
 
@@ -43,7 +41,7 @@ export default function Home() {
   return (
     <div className={style.container}>
       <div className={style.header}>
-        <HeaderBar title="Home Page" />
+        <HeaderBar title={patientName} />
       </div>
 
       {!user.isStaff ? <Link className={style.start_measure} to="/load-result">
