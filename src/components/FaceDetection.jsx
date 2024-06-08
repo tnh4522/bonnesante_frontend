@@ -111,7 +111,7 @@ const FaceDetectionComponent = props => {
               result: dataResult,
             })
               .then(() => {
-                console.log('save result success')
+                localStorage.setItem('resultId', dataResult.resultId);
                 props.setShow(false);
               })
               .catch((error) => {

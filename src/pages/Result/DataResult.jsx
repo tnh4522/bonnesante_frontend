@@ -1,13 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import style from './ListResult.module.css'
 import Icon from '@mdi/react'
 import { mdiHeartPulse, mdiWater, mdiLungs } from '@mdi/js'
 import Chart from './Chart'
 import { PieChart } from './PieChart'
+import { Button, Modal } from 'antd';
 
 const DataResult = ({ data }) => {
   const { result } = data;
   const dateNow = new Date().toLocaleDateString();
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const showLoading = () => {
+    setOpen(true);
+    setLoading(true);
+
+    // Simple loading mock. You should add cleanup logic in real world.
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  };
+
   return (
     <div className={style.data_container}>
       <h2 className={style.title}>{result ? result.result.date : dateNow}</h2>
@@ -48,6 +62,23 @@ const DataResult = ({ data }) => {
       <div className={style.data_status_container}>
         <PieChart result={result} />
       </div>
+      <Button type="primary" onClick={showLoading}>
+        View Advice
+      </Button>
+      <Modal
+        title={<p>Advice</p>}
+        footer={
+          <Button type="primary" onClick={showLoading}>
+            
+          </Button>
+        }
+        loading={loading}
+        open={open}
+        onCancel={() => setOpen(false)}
+      >
+        <p>Advice</p>
+        {result ? result.result.advice : 'No advice'}
+      </Modal>
     </div>
   )
 }

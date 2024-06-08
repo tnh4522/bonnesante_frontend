@@ -1,25 +1,16 @@
 import React from 'react';
-import style from './Meeting.module.css';
-import FaceDetectionComponent from '../FaceDetection';
-// import Meeting from './MeetingRoomDoctor';
 import { MeasureModal } from './MeasureModal';
-import Modals from '../Modal/Modals';
-
 import useResultsContext from '../../hooks/useResultsContext';
-import useUserContext from '../../hooks/useUserContext';
-
 import MeetingRoomUser from './MeetingRoomUser';
-
-import { ref, child, get, update, onValue } from "firebase/database";
+import { ref } from "firebase/database";
 import { database } from "../../services/firebase/config";
+import { set } from 'lodash';
 
 function JoinMeetingUser() {
 
   const [stateMeasure, setStateMeasure] = React.useState(false);
   const { result, setResult } = useResultsContext();
-
-  const { user } = useUserContext();
-  console.log(user.id);
+  const patientId = JSON.parse(localStorage.getItem('patient')).id;
 
   const dbRef = ref(database);
 
@@ -27,20 +18,10 @@ function JoinMeetingUser() {
     setStateMeasure(true);
   }
 
-  onValue((child(dbRef, `result/${user.id}/result`)), (snapshot) => {
-    const data = snapshot.val();
-
-    if (result.isOutDated !== data.isOutDated) {
-      setResult(data);
-    }
-  });
-
   return (
     <div>
       <main>
-        <MeetingRoomUser role={0} userID={user.id} />
-
-        <Modals data={result} isDataOutDated={result.isOutDated} />
+        <MeetingRoomUser role={0} userID={patientId} />
 
         {stateMeasure ? (
           <MeasureModal />

@@ -18,7 +18,7 @@ const ResultPage = () => {
     const navigate = useNavigate();
     const { result } = useResultsContext();
     const patient = JSON.parse(localStorage.getItem('patient'));
-    const resultId = useParams().id;
+    const resultId = localStorage.getItem('resultId') ? localStorage.getItem('resultId') : useParams().id;
 
     const renderResult = () => {
         if (Object.keys(result).length === 0) {

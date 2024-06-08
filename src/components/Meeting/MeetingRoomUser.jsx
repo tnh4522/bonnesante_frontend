@@ -9,14 +9,10 @@ import { ref, child, get, update, onValue } from "firebase/database";
 import { database } from "../../services/firebase/config";
 
 import { ZOOM_SIGN_URL } from '../../constants/values';
-import ToastResult from './ToastResult';
+
 
 
 function MeetingRoomUser({ role = 0, userID }) {
-
-    //for meeting ended by doctor
-    // const [stateMeeting, setStateMeeting] = React.useState(false);
-
     const [stateConnect, setStateConnect] = React.useState(false);
 
     const [isMeeting, setIsStateMeeting] = React.useState(true)
@@ -33,8 +29,6 @@ function MeetingRoomUser({ role = 0, userID }) {
     var registrantToken = ''
     var zakToken = ''
     var leaveUrl = 'http://localhost:3000'
-
-    const location = useLocation()
 
     const dbRef = ref(database);
 
@@ -60,7 +54,6 @@ function MeetingRoomUser({ role = 0, userID }) {
     }
 
     function startMeeting(signature) {
-        // var client
         try {
             client = ZoomMtgEmbedded.destroyClient();
             client = ZoomMtgEmbedded.createClient();
@@ -83,7 +76,6 @@ function MeetingRoomUser({ role = 0, userID }) {
                 tk: registrantToken,
                 zak: zakToken
             }).then(async () => {
-                // setStateMeeting(true);
                 console.log('joined successfully')
             }).catch((error) => {
                 console.log(error)
@@ -93,22 +85,19 @@ function MeetingRoomUser({ role = 0, userID }) {
         })
     }
 
-    // Tracking if the doctor has ended the meeting
-    onValue((child(dbRef, `videoCall/${userID}`)), (snapshot) => {
-        const requestInfo = snapshot.val();
+    useEffect(() => {
+        onValue((child(dbRef, `videoCall/${userID}`)), (snapshot) => {
+            const requestInfo = snapshot.val();
 
-        console.log(requestInfo)
+            if (!requestInfo.isMeeting) {
 
-        if (!requestInfo.isMeeting) {
-            // alert("The meeting has ended, you will return to the home page")
+                client = ZoomMtgEmbedded.destroyClient();
+                setIsStateMeeting(false)
 
-            client = ZoomMtgEmbedded.destroyClient();
-            setIsStateMeeting(false)
-
-            navigate("/home")
-        }
-    });
-
+                navigate("/home")
+            }
+        });
+    }, [userID]);
 
     return (
         <div>

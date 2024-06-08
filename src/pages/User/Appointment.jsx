@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Collapse, Divider, Button } from 'antd';
 import { API_URL } from '../../constants/values';
+import { Link } from 'react-router-dom';
 
 export default function Appointment() {
     const [appointment, setAppointment] = useState([]);
@@ -81,7 +82,7 @@ export default function Appointment() {
             return (
                 <div style={{ 'display': 'flex', 'justifyContent': 'space-between' }}>
                     <Button style={{ 'marginRight': '5px' }} danger>Cancel</Button>
-                    <Button style={{ 'marginRight': '5px', 'border': '1px solid #28a745', 'color': '#28a745' }} ghost>Meeting</Button>
+                    <Button onClick={() => navigater('/patient/meeting')} style={{ 'marginRight': '5px', 'border': '1px solid #28a745', 'color': '#28a745' }} ghost>Meeting</Button>
                 </div>
             )
         } else {
