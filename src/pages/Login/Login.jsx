@@ -42,8 +42,6 @@ const Login = () => {
     e.preventDefault()
     const fieldCheck = ValidationLogin(data)
 
-    console.log(fieldCheck)
-
     if (isValidation(fieldCheck)) {
       setError('')
 
@@ -68,7 +66,7 @@ const Login = () => {
                 const patient = res.data;
 
                 localStorage.setItem('patient', JSON.stringify(patient));
-                navigate('/home')
+                navigate('/')
               })
               .catch(err => console.log(err));
           } else {
@@ -94,7 +92,7 @@ const Login = () => {
         </div>
 
         <form className={style.form} onSubmit={handleSubmit} noValidate>
-          <h2 className={style.form__header}>Login Details</h2>
+          <h2 className={style.form__header}>Login Page</h2>
           <input
             type='username'
             name='username'
@@ -122,9 +120,6 @@ const Login = () => {
           <p className={style.form__error}>{error.login}</p>
           <button type='submit' name='submit' className={style.form__button}>
             Login
-          </button>
-          <button type='button' className={style.button_add} onClick={() => navigate('/add-data')}>
-            Add Data without Login
           </button>
         </form>
       </div>

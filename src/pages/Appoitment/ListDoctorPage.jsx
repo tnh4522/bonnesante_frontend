@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import HeaderBar from '../../components/HeaderBar/HeaderBar';
 import doctorIcon from '../../assets/images/doctor-icon-avatar-white_136162-58.png';
 import style from './DoctorRegister.module.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { API_URL } from '../../constants/values.js'
+import useTitleContext from '../../hooks/useTitleContext.jsx';
 
 export default function ListDoctorPage() {
     const navigate = useNavigate();
     const [doctors, setDoctors] = useState([]);
     const [search, setSearch] = useState('');
     const [error, setError] = useState(false);
+    const { saveTitle } = useTitleContext();
+
     const hash = window.location.pathname;
 
     const patient = JSON.parse(localStorage.getItem('patient'));
-  
+    useEffect(() => {
+        hash === '/doctor/chat' ? saveTitle({ title: 'List of Doctors', isTurnBack: true }) : saveTitle({ title: 'Appointment', isTurnBack: false });
+    }, [hash]);
     useEffect(() => {
         axios.get(API_URL + 'patient/' + patient.id + '/doctor/list')
             .then(res => {
@@ -65,10 +69,10 @@ export default function ListDoctorPage() {
                                 <p><strong className={style.sub_title}>Hospital: </strong> {doctor.hospital}</p>
                                 <p><strong className={style.sub_title}>Phone: </strong> {doctor.phone}</p>
                                 <p><strong className={style.sub_title}>Email: </strong> {doctor.email}</p>
-                                {hash == '/chat' ? (
-                                    <Link to={'/chat/doctor/' + doctor.id} state={doctor} className={style.card_button}>Chat with doctor</Link>
+                                {hash == '/doctor/chat' ? (
+                                    <Link to={'/doctor/chat/' + doctor.id} state={doctor} className={style.card_button}>Chat with doctor</Link>
                                 ) : (
-                                    <Link to={'/make-appointment/' + doctor.id} state={doctor} className={style.card_button}>Make an appointment</Link>
+                                    <Link to={'make-appointment/' + doctor.id} state={doctor} className={style.card_button}>Make an appointment</Link>
                                 )}
                             </div>
                             <div className={style.card_image}>
@@ -84,9 +88,6 @@ export default function ListDoctorPage() {
 
     return (
         <div className={style.container}>
-            <div className={style.header}>
-                <HeaderBar title="Select Doctor" />
-            </div>
             {renderDoctor()}
         </div>
     );

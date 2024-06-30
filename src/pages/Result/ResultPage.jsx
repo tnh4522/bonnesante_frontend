@@ -1,7 +1,6 @@
 import React, { Suspense, lazy } from 'react'
 import style from './ListResult.module.css'
 import { useNavigate, useParams } from 'react-router-dom'
-import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import useResultsContext from '../../hooks/useResultsContext'
 import Loading from '../../lazy/Loading'
 
@@ -17,7 +16,6 @@ const DataResult = lazy(() => delayForDemo(import('./DataResult')));
 const ResultPage = () => {
     const navigate = useNavigate();
     const { result } = useResultsContext();
-    const patient = JSON.parse(localStorage.getItem('patient'));
     const resultId = localStorage.getItem('resultId') ? localStorage.getItem('resultId') : useParams().id;
 
     const renderResult = () => {
@@ -35,7 +33,6 @@ const ResultPage = () => {
     return (
         <div className={style.page}>
             <div className={style.container}>
-                <HeaderBar title="Result Measurement"/>
                 <div className={style.loading_data}>
                     {result &&
                         (<Suspense fallback={<Loading />}>

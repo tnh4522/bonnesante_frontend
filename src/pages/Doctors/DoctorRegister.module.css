@@ -11,6 +11,7 @@
     align-items: center;
     justify-content: center;
     font-family: 'Montserrat', sans-serif;
+    margin-top: 5rem;
 }
 
 .container h1 {
@@ -127,7 +128,8 @@
     justify-content: space-between;
     padding: 1rem;
     position: sticky;
-    bottom: 0;
+    bottom: 4rem;
+    margin-top: 2rem;
 }
 
 .footer .btn {

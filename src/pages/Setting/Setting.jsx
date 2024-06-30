@@ -1,5 +1,4 @@
 import React from 'react';
-import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
@@ -9,15 +8,20 @@ import SupportIcon from '@mui/icons-material/Support';
 import HelpIcon from '@mui/icons-material/Help';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import styles from './Setting.module.css';
+import useUserContext from '../../hooks/useUserContext'
+import { Link } from 'react-router-dom';
 
 export default function SettingsScreen() {
+  const { saveUser } = useUserContext();
+  
+  function logout() {
+    saveUser(null);
+    localStorage.removeItem('user');
+    localStorage.removeItem('patient');
+  }
+
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <HomeIcon fontSize="large" />
-        <span className={styles.headerText}>Setting</span>
-      </div>
-
       <div className={styles.row}>
         <PersonIcon fontSize="large" className={styles.icon} />
         <span className={styles.rowText}>My profile</span>
@@ -56,7 +60,7 @@ export default function SettingsScreen() {
       </div>
 
       <div className={styles.deleteAccountRow}>
-        <span className={styles.deleteAccountText}>Delete account</span>
+        <Link to='/' onClick={logout} className={styles.deleteAccountText}>Log out</Link>
       </div>
     </div>
   );

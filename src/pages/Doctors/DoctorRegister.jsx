@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import HeaderBar from '../../components/HeaderBar/HeaderBar';
 import doctorIcon from '../../assets/images/doctor-icon-avatar-white_136162-58.png';
 import style from './DoctorRegister.module.css';
 import { useNavigate } from 'react-router-dom';
@@ -7,14 +6,18 @@ import { Checkbox, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { API_URL } from '../../constants/values';
+import useTitleContext from '../../hooks/useTitleContext';
 
 export default function DoctorPage() {
     const navigate = useNavigate();
     const [doctors, setDoctors] = useState([]);
     const [search, setSearch] = useState('');
     const [selectedDoctorIds, setSelectedDoctorIds] = useState([]);
+    const {saveTitle} = useTitleContext();
+    
 
     useEffect(() => {
+        saveTitle({title: 'Register Doctor', isTurnBack: true});
         axios.get(API_URL + 'doctor/list')
             .then(res => {
                 const doctors = res.data;
@@ -75,13 +78,14 @@ export default function DoctorPage() {
         setSearch(e.target.value);
     };
 
-    const patient  = JSON.parse(localStorage.getItem('patient'));
+    const patient = JSON.parse(localStorage.getItem('patient'));
 
     const registerDoctor = () => {
         if (selectedDoctorIds.length === 0) {
             alert('Please select a doctor');
             return;
         } else {
+            []
             axios.post(API_URL + 'patient/' + patient.id + '/register/doctor', { doctorIds: selectedDoctorIds })
                 .then(res => {
                     console.log('Doctors registered successfully:', res.data);
@@ -93,9 +97,6 @@ export default function DoctorPage() {
 
     return (
         <div className={style.container}>
-            <div className={style.header}>
-                <HeaderBar title="Register Doctor" />
-            </div>
             <div className={style.search}>
                 <input
                     className={style.search_input}

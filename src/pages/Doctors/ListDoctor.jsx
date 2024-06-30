@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Checkbox, Button } from 'antd';
 import axios from 'axios';
 import { API_URL } from '../../constants/values.js'
+import useTitleContext from '../../hooks/useTitleContext.jsx';
 
 export default function DoctorList() {
     const navigate = useNavigate();
@@ -14,8 +15,10 @@ export default function DoctorList() {
     const [selectedDoctorIds, setSelectedDoctorIds] = useState([]);
     const [error, setError] = useState(false);
     const patient = JSON.parse(localStorage.getItem('patient'));
+    const { saveTitle } = useTitleContext();
 
     useEffect(() => {
+        saveTitle({ title: 'My Doctor', isTurnBack: true });
         axios.get(API_URL + 'patient/' + patient.id + '/doctor/list')
             .then(res => {
                 const doctors = res.data;
@@ -103,9 +106,6 @@ export default function DoctorList() {
 
     return (
         <div className={style.container}>
-            <div className={style.header}>
-                <HeaderBar title="My Doctor" />
-            </div>
             {renderDoctor()}
             <div className={style.footer}>
                 {error == false ? (

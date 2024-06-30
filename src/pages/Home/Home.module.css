@@ -12,13 +12,23 @@
     justify-content: center;
     font-family: 'Montserrat', sans-serif;
 }
+
 .container h1 {
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: 1000;
     text-transform: uppercase;
     text-align: center;
     line-height: 1.5;
-    margin-bottom: 1rem;
+    margin: 1rem 0;
+}
+
+.container p {
+    font-size: 1rem;
+    font-weight: 1000;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.5;
+    margin-top: 5rem;
 }
 
 .header {
@@ -38,6 +48,7 @@
     background-size: cover;
     background-position: center;
     animation: beat 1s ease infinite;
+    margin-top: 6rem;
 }
 
 .text_overlay {
@@ -62,6 +73,17 @@
     justify-content: center;
 }
 
+.measurement_instruction {
+    width: 60%;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 1000;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.5;
+    margin: 1rem 0;
+}
+
 .card {
     width: 90%;
     height: 10rem;
@@ -73,6 +95,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 1rem;
+    text-decoration: none;
 }
 
 .card_text {
@@ -83,32 +106,37 @@
     line-height: 1.5;
     font-size: 1.2rem;
 }
+
 .card img {
     width: 70px;
     object-fit: cover;
 }
+
 .card ion-icon {
     font-size: 58px;
     color: #fff;
 }
+
 @keyframes beat {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.2);
     }
 }
 
-
-@media(min-width:500px){
+@media(min-width:500px) {
     .start_measure {
-        width:46%;
+        width: 46%;
     }
 }
-@media(min-width:992px){
+
+@media(min-width:992px) {
     .start_measure {
         width: 24%;
     }
 }
-

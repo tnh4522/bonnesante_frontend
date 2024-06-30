@@ -3,15 +3,16 @@ import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import styles from './User.module.css'
 import useUserContext from '../../hooks/useUserContext';
 
-
 export default function UserInfo() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const { user, saveUser } = useUserContext();
     useEffect(() => {
-        setUsername(user.username);
-        setPassword(user.password);
+        if (Object.keys(user).length > 0) {
+            setUsername(user.username);
+            setPassword(user.password);
+        }
     }, [user])
 
     const updateInfo = (e) => {

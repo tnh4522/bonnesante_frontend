@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import styles from './Appointment.module.css'
 import useUserContext from '../../hooks/useUserContext';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Collapse, Badge, Divider, Button, Descriptions } from 'antd';
-import { child } from 'firebase/database';
+import { Collapse, Badge, Divider, Descriptions } from 'antd';
 import { API_URL } from '../../constants/values.js'
 
 export default function AppointmentDetail() {
@@ -108,9 +106,6 @@ export default function AppointmentDetail() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.header}>
-                <HeaderBar title="Appointment Detail" />
-            </div>
             <div className={styles.appointment}>
                 <Descriptions title="Doctor Information" items={itemDoctor} style={{ backgroundColor: '#f0f2f5', padding: '10px', borderRadius: '15px', marginBottom: '5px' }} />
                 <Descriptions title="Patient Information" items={itemPatient} style={{ backgroundColor: '#f0f2f5', padding: '10px', borderRadius: '15px', marginBottom: '5px' }} />

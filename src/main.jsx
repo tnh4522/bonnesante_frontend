@@ -3,20 +3,14 @@ import './Index.css'
 
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { HashRouter, BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-
-import Welcome from './pages/Welcome/Welcome.jsx'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Login from './pages/Login/Login.jsx'
 import SignUp from './pages/SignUp/SignUp.jsx'
-import AddData from './pages/AddData/AddData.jsx'
 import LoadResult from './pages/LoadResult/LoadResult.jsx'
-// import ListResult from './pages/Result/History.jsx'
 import Home from './pages/Home/Home.jsx'
 import ResultPage from './pages/Result/ResultPage.jsx'
-import { PieChart } from './pages/Result/PieChart.jsx'
 import ProtectedRoutes from './utils/ProtectedRoutes.jsx'
 import CheckScheduled from './pages/Doctors/CheckScheduled/CheckScheduled.jsx'
-import CheckUser from './utils/CheckUser.jsx'
 import MeetingDoctor from './pages/Doctors/Meeting/MeetingDoctor.jsx'
 import MeetingUser from './pages/Patient/MeetingUser.jsx'
 import History from './pages/Result/History.jsx'
@@ -38,45 +32,29 @@ import DoctorChatPage from './pages/Chat/DoctorChatPage.jsx'
 const rootElement = document.getElementById('root')
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
-    // <React.StrictMode>
     <Router>
       <App>
         <Routes>
-          <Route path='/' element={<Welcome />} />
+          <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/setting' element={<SettingsScreen />} />
+          <Route path='/measure' element={<LoadResult />} />
+          <Route path='/medical' element={<Medical />} />
+
           <Route path='/user' element={<ProtectedRoutes>
             <UserInfo />
           </ProtectedRoutes>} />
-          <Route path='/profile' element={<ProtectedRoutes>
-            <PatientProfile />
-          </ProtectedRoutes>} />
-          <Route path='/medical' element={<Medical />} />
-          <Route path='/home' element={<Home />} />
-          <Route path='/add-data' element={
-            <ProtectedRoutes>
-              <CheckUser userComponent={<AddData />} doctorComponent={<><h1>You are doctor</h1></>} />
-            </ProtectedRoutes>
-          } />
-          <Route path='/load-result' element={
-            <ProtectedRoutes>
-              <CheckUser userComponent={<LoadResult />} doctorComponent={<><h1>You are doctor</h1></>} />
-            </ProtectedRoutes>
-          } />
-          <Route path='/history/result' element={
-            <ProtectedRoutes>
-              <CheckUser userComponent={<History />} doctorComponent={<><h1>You are doctor</h1></>} />
-            </ProtectedRoutes>
-          } />
-          <Route path='/history' element={
-            <ProtectedRoutes>
-              <HistoryPage />
-            </ProtectedRoutes>
-          } />
+
+          // start doctor route
           <Route path='/doctor' element={
             <ProtectedRoutes>
               <DoctorPage />
+            </ProtectedRoutes>
+          } />
+          <Route path='/doctor/register' element={
+            <ProtectedRoutes>
+              <DoctorRegister />
             </ProtectedRoutes>
           } />
           <Route path='/doctor/list' element={
@@ -84,34 +62,27 @@ if (rootElement) {
               <DoctorList />
             </ProtectedRoutes>
           } />
-          <Route path='/register/doctor' element={
-            <ProtectedRoutes>
-              <DoctorRegister />
-            </ProtectedRoutes>
-          } />
-          <Route path='/result/:id' element={
-            <ProtectedRoutes>
-              <ResultPage />
-            </ProtectedRoutes>
-          } />
-          <Route path='/appointment/doctor/list' element={
+          <Route path='/doctor/chat' element={
             <ProtectedRoutes>
               <ListDoctorPage />
             </ProtectedRoutes>
           } />
-          <Route path='/chat' element={
-            <ProtectedRoutes>
-              <ListDoctorPage />
-            </ProtectedRoutes>
-          } />
-          <Route path='/chat/doctor/:id' element={
+          <Route path='/doctor/chat/:id' element={
             <ProtectedRoutes>
               <DoctorChatPage />
             </ProtectedRoutes>
           } />
+          // end doctor route
+
+          // start appointment route
           <Route path='/appointment' element={
             <ProtectedRoutes>
-              <Appointment />
+              <ListDoctorPage />
+            </ProtectedRoutes>
+          } />
+          <Route path='appointment/make-appointment/:id' element={
+            <ProtectedRoutes>
+              <MakeAppointment />
             </ProtectedRoutes>
           } />
           <Route path='/appointment/detail/:id' element={
@@ -119,42 +90,56 @@ if (rootElement) {
               <AppointmentDetail />
             </ProtectedRoutes>
           } />
-          <Route path='/make-appointment/:id' element={
+          // end appointment route
+
+          // start history route
+          <Route path='/history' element={
             <ProtectedRoutes>
-              <MakeAppointment />
+              <HistoryPage />
             </ProtectedRoutes>
           } />
-          <Route path='/chart' element={
+          <Route path='/history/appointment' element={
             <ProtectedRoutes>
-              <PieChart />
-            </ProtectedRoutes>} />
+              <Appointment />
+            </ProtectedRoutes>
+          } />
+          <Route path='/history/result' element={
+            <ProtectedRoutes>
+              <History />
+            </ProtectedRoutes>
+          } />
+          // end history route
+
+          <Route path='/profile' element={<ProtectedRoutes>
+            <PatientProfile />
+          </ProtectedRoutes>} />
+
+          <Route path='/result/:id' element={<ResultPage />} />
 
           <Route path='patient/meeting' element={
             <ProtectedRoutes>
-              <CheckUser userComponent={<MeetingUser />} doctorComponent={<><h1>You are doctor</h1></>} />
+              <MeetingUser />
             </ProtectedRoutes>} />
 
           <Route path='/doctor/meeting' element={
             <ProtectedRoutes>
-              <CheckUser userComponent={<><h1>You are patient</h1></>} doctorComponent={<MeetingDoctor />} />
+              <MeetingDoctor />
             </ProtectedRoutes>} />
 
           <Route path='/checkScheduled' element={
             <ProtectedRoutes>
-              <CheckUser userComponent={<><h1>You are patient</h1></>} doctorComponent={<CheckScheduled />} />
+              <CheckScheduled />
             </ProtectedRoutes>
           } />
 
           <Route path='/patient-page' element={
             <ProtectedRoutes>
-              <CheckUser userComponent={<PatientPage />} doctorComponent={<><h1>You are doctor</h1></>} />
+              <PatientPage />
             </ProtectedRoutes>} />
 
           <Route path='*' element={<h1>Not Found</h1>} />
-
         </Routes>
       </App>
     </Router>
-    // </React.StrictMode>
   )
 }

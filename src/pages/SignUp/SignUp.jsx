@@ -1,13 +1,22 @@
 /* eslint-disable prettier/prettier */
-import React from 'react'
+import React, { useEffect } from 'react'
 import style from './SignUp.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import API from '../../constants/api/API'
 import { ValidationRegister } from '../../validation/validationForm'
+import axios from 'axios'
+import { API_URL } from '../../constants/values'
+import useTitleContext from '../../hooks/useTitleContext.jsx';
 
 const SignUp = () => {
+  const { saveTitle } = useTitleContext();
+  useEffect(() => {
+    saveTitle({ title: 'Bonne Santé', isTurnBack: true })
+  }, []);
   const [data, setData] = React.useState({ username: '', password: '', confirmPassword: '', email: '', first_name: '', last_name: '' })
   const [error, setError] = React.useState({ username: '', password: '', confirmPassword: '', email: '', first_name: '', last_name: '', signup: '' })
+  const [healthID, setHealthID] = React.useState('')
+  const [signUpWithHealthID, setSignUpWithHealthID] = React.useState(false);
 
   let navigate = useNavigate()
 
@@ -35,13 +44,11 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log("submit")
-    const fieldCheck = ValidationRegister(data)
 
-    console.log(fieldCheck)
+    // const fieldCheck = ValidationRegister(data)
 
-    if (isValidation(fieldCheck)) {
-      console.log("thuc hien dk")
+    if (!signUpWithHealthID) {
+
       setError('')
       const formdata = new FormData()
       formdata.append('username', data.username)
@@ -59,12 +66,49 @@ const SignUp = () => {
           setError({ ...error, signup: err.response.data.message })
           console.log(err)
         })
+    } else {
+
+      axios.get(API_URL + 'patient/register/healthID/' + healthID)
+        .then((res) => {
+          navigate('/')
+          localStorage.setItem('patient', JSON.stringify(res.data[0]));
+          localStorage.setItem('user', JSON.stringify(res.data[1]));
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   }
 
-  return (
-    <div className={style.page}>
-      <div className={style.container}>
+  const changeFormSignUp = () => {
+    setSignUpWithHealthID(!signUpWithHealthID)
+  }
+
+  const renderFormSignUp = () => {
+    if (signUpWithHealthID) {
+      return (
+        <form className={style.form} method='post' onSubmit={handleSubmit} noValidate>
+          <h2 className={style.form__header}>Sign Up</h2>
+          <input
+            type='text'
+            name='health_id'
+            className={style.form__username}
+            placeholder='Ennter Your Health ID'
+            onChange={(e) => setHealthID(e.target.value)}
+            required
+          />
+          <p className={style.form__link}>
+            Check your Health ID? <Link to='/login'>Click</Link>
+          </p>
+          <button type='submit' name='submit' className={style.form__button}>
+            Sign Up
+          </button>
+          <p className={style.form__error}>{error.signup}</p>
+        </form>
+      )
+    } else {
+      return (
         <form className={style.form} method='post' onSubmit={handleSubmit} noValidate>
           <h2 className={style.form__header}>Sign Up</h2>
           <input
@@ -86,24 +130,6 @@ const SignUp = () => {
           />
           <p className={style.form__error}>{error.password}</p>
           <input
-            type='password'
-            name='confirmPassword'
-            className={style.form__password}
-            placeholder='Confirm Password'
-            onChange={handleChange}
-            required
-          />
-          <p className={style.form__error}>{error.confirmPassword}</p>
-          <input
-            type='email'
-            name='email'
-            className={style.form__email}
-            placeholder='Email'
-            onChange={handleChange}
-            required
-          />
-          <p className={style.form__error}>{error.email}</p>
-          <input
             type='text'
             name='first_name'
             placeholder='First Name'
@@ -123,8 +149,19 @@ const SignUp = () => {
           <button type='submit' name='submit' className={style.form__button}>
             Sign Up
           </button>
+          <button type='button' className={style.button_add} onClick={changeFormSignUp}>
+            Sign Up with Health ID
+          </button>
           <p className={style.form__error}>{error.signup}</p>
         </form>
+      )
+    }
+  }
+
+  return (
+    <div className={style.page}>
+      <div className={style.container}>
+        {renderFormSignUp()}
       </div>
       <div className={style.decoration}>
         <svg data-name='Layer 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'>

@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Flex, Segmented } from 'antd';
-import { Button, Select, Checkbox } from 'antd';
-import HeaderBar from '../../components/HeaderBar/HeaderBar';
+import { Button, Select } from 'antd';
 import style from './User.module.css';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { API_URL } from '../../constants/values.js'
-
+import useTitleContext from '../../hooks/useTitleContext.jsx';
 
 const MakeAppointment = (props) => {
+    const { saveTitle } = useTitleContext();
+    useEffect(() => {
+        saveTitle({ title: 'Make Appointment', isTurnBack: true });
+    }, []);
     const date = new Date();
     const currentDate = date.toLocaleDateString();
 
@@ -25,9 +28,11 @@ const MakeAppointment = (props) => {
     const location = useLocation();
     const doctor  = location.state;
     
+    // goi api lay lich bận cua doctor để lọc ra những lịch rảnh (ko hiển thị lịch bận lên)
     useEffect(() => {
         axios.post(API_URL + 'doctor/' + doctorID + '/schedule', dateSelected)
             .then(res => {
+                console.log(res.data);
                 setSchedule(res.data);
             })
             .catch(err => console.log(err));
@@ -178,9 +183,7 @@ const MakeAppointment = (props) => {
 
     return (
         <div className={style.container}>
-            <div className={style.header}>
-                <HeaderBar title="Make Appointment" />
-            </div>
+
             <h2>Dr. {doctor && doctor.name}</h2>
             <Flex justify="center">
                 <LeftOutlined onClick={handlePrevPage} className={currentPage === 0 ? style.disabled : ''} />

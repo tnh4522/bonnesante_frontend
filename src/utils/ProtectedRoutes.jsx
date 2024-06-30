@@ -4,8 +4,8 @@ import useUserContext from '../hooks/useUserContext'
 
 const ProtectedRoutes = ({ children }) => {
     const { user, saveUser } = useUserContext();
-
-    if (!user) {
+    const checkUser = localStorage.getItem('user') == null ? false : true;
+    if (checkUser === false) {
         return <Navigate to="/login" />
     }
 

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import styles from './User.module.css'
 import useUserContext from '../../hooks/useUserContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import { API_URL } from '../../constants/values.js'
+import useTitleContext from '../../hooks/useTitleContext.jsx';
 
 export default function PatientProfile() {
+    const { saveTitle } = useTitleContext();
+
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [age, setAge] = useState('');
@@ -36,6 +38,7 @@ export default function PatientProfile() {
     };
 
     useEffect(() => {
+        saveTitle({ title: 'Update Profile', isTurnBack: false });
         let patient = JSON.parse(localStorage.getItem('patient'));
         if (!patient) {
             if (user) {
@@ -92,6 +95,7 @@ export default function PatientProfile() {
                 weight: weight,
                 height: height
             }
+
             axios.post(API_URL + 'patient/save', patient)
                 .then(res => {
                     if (res.status === 200) {
@@ -106,9 +110,6 @@ export default function PatientProfile() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.header}>
-                <HeaderBar title="Patient Profile" />
-            </div>
             {contextHolder}
             <form className={styles.formProfile}>
                 <div className={styles.inputGroup}>

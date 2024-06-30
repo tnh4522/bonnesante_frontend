@@ -92,12 +92,12 @@ const FaceDetectionComponent = props => {
 
       setCancelState(true);
 
-      axios
-        .post(PATH_URL + 'model/', formData)
+      axios.post(PATH_URL + 'model/', formData)
         .then(response => {
           if (response.data) {
 
             setShowToast(true)
+            
             const dataResult = {
               ...response.data,
               resultId: uuid(),

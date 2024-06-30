@@ -1,13 +1,16 @@
 import 'react-chat-elements/dist/main.css';
 import { MessageBox } from 'react-chat-elements';
-import React, { useState } from 'react';
-import HeaderBar from '../../components/HeaderBar/HeaderBar';
+import React, { useEffect, useState } from 'react';
 import style from './Chat.module.css';
 import { useLocation } from 'react-router-dom';
 import { Input } from 'antd';
+import useTitleContext from '../../hooks/useTitleContext';
 
 export default function ListDoctorPage() {
-    const { state } = useLocation();
+    const {saveTitle} = useTitleContext();
+    useEffect(() => {
+        saveTitle({title: 'Chat With Doctor', isTurnBack: true});
+    }, []);
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const inputReference = React.createRef();
@@ -65,9 +68,6 @@ export default function ListDoctorPage() {
 
     return (
         <div className={style.container}>
-            <div className={style.header}>
-                <HeaderBar title={'Dr. ' + (state != null ? state.name : '')} />
-            </div>
             <div className={style.chat_body}>
                 {renderMessages()}
             </div>

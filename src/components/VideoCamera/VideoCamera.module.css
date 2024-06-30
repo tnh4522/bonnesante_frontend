@@ -15,8 +15,8 @@
 
 .videoCamera {
   min-width: 200px;
-  min-height: 380px;
-  margin: 10px auto;
+  min-height: 340px;
+  margin: 0px auto;
   position: relative;
   border-radius: 50%;
 }
