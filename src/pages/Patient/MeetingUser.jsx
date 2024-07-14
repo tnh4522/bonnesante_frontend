@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './MeetingUser.module.css'
-import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import FindingDoctor from '../../lazy/FindingDoctor'
 import { ref, onValue, child } from 'firebase/database'
 import { database } from '../../services/firebase/config'
 import JoinMeetingUser from '../../components/Meeting/JoinMeetingUser'
+import useTitleContext from '../../hooks/useTitleContext'
 
 const MeetingUser = () => {
+  const {saveTitle} = useTitleContext();
+  useEffect(() => {
+    saveTitle({title: 'Meeting', isTurnBack: true});
+  }, []);
   const [isAccepted, setIsAccepted] = useState(false);
 
   const dbRef = ref(database);
@@ -23,9 +27,6 @@ const MeetingUser = () => {
 
   return (
     <div className={style.page}>
-      <div className={style.header}>
-        <HeaderBar title='Meeting' />
-      </div>
       <div className={style.containerMeetingUser}>
         <div className={style.contentMeetingUser}>
           {
