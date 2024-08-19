@@ -5,7 +5,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import useUserContext from '../hooks/useUserContext'
 import VideoCamera from './VideoCamera/VideoCamera'
 import { useNavigate } from 'react-router-dom'
-import { PATH_URL } from "../constants/values"
+import { API_URL, PATH_URL } from "../constants/values"
 import useResultsContext from '../hooks/useResultsContext'
 import { database } from '../services/firebase/config'
 import { ref, set, child } from 'firebase/database'
@@ -39,6 +39,16 @@ const FaceDetectionComponent = props => {
   const [recordedChunks, setRecordedChunks] = useState([]);
 
   const navigate = useNavigate();
+
+  const saveResult = (result) => {
+    axios.post(API_URL + 'user/save/result', result)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
 
   async function getCameraStream() {
     await navigator.mediaDevices
@@ -97,15 +107,23 @@ const FaceDetectionComponent = props => {
           if (response.data) {
 
             setShowToast(true)
-            
+
             const dataResult = {
               ...response.data,
               resultId: uuid(),
               date: new Date().toLocaleDateString(),
             }
 
+            const dataPostResult = {
+              userId: user.id,
+              uuid: dataResult.resultId,
+              result: 'sample'
+            }
+
+            saveResult(dataPostResult);
+
             setResult(dataResult);
-            
+
             set(child(dbRef, `result/` + dataResult.resultId), {
               patientId: patient.id,
               result: dataResult,
